@@ -300,11 +300,29 @@
         updateSlider();
     };
 
+    const initDonationBanner = () => {
+        const form = document.querySelector('.donation-banner__form');
+        if (!form) return;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = form.querySelector('.donation-banner__input');
+            const raw = input && input.value.trim().replace(/[$,]/g, '');
+            const amount = raw ? parseInt(raw, 10) : null;
+            if (Number.isNaN(amount) || amount <= 0) {
+                openCarePopup();
+            } else {
+                openDonationForm(amount);
+            }
+        });
+    };
+
     const init = () => {
         initCarePopup();
         initDonationForm();
         initPetsSlider();
         initTestimonialsSlider();
+        initDonationBanner();
     };
 
     if (document.readyState === 'loading') {
