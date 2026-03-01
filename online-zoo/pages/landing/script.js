@@ -194,6 +194,7 @@
     document.addEventListener('keydown', handleKeyDown);
 
     const initPetsSlider = () => {
+        if (window.innerWidth <= 640) return;
         const prevBtn = document.querySelector('.pets__arrow--prev');
         const nextBtn = document.querySelector('.pets__arrow--next');
         const track = document.querySelector('.pets__track');
@@ -249,6 +250,7 @@
     };
 
     const initTestimonialsSlider = () => {
+        if (window.innerWidth <= 640) return;
         const prevBtn = document.querySelector('.testimonials__arrow--prev');
         const nextBtn = document.querySelector('.testimonials__arrow--next');
         const track = document.querySelector('.testimonials__track');
@@ -300,6 +302,57 @@
         updateSlider();
     };
 
+    const initHamburger = () => {
+        const hamburger = document.querySelector('.nav__hamburger');
+        const overlay = document.getElementById('nav-overlay');
+        const closeBtn = overlay?.querySelector('.nav-overlay__close');
+        const overlayLinks = overlay?.querySelectorAll('.nav-overlay__link');
+
+        if (!hamburger || !overlay) return;
+
+        const openMenu = () => {
+            overlay.classList.add('is-open');
+            overlay.setAttribute('aria-hidden', 'false');
+            hamburger.setAttribute('aria-expanded', 'true');
+            hamburger.setAttribute('aria-label', 'Close menu');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeMenu = () => {
+            overlay.classList.remove('is-open');
+            overlay.setAttribute('aria-hidden', 'true');
+            hamburger.setAttribute('aria-expanded', 'false');
+            hamburger.setAttribute('aria-label', 'Open menu');
+            document.body.style.overflow = '';
+        };
+
+        hamburger.addEventListener('click', () => {
+            if (overlay.classList.contains('is-open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeMenu);
+        }
+
+        overlayLinks?.forEach((link) => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeMenu();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && overlay?.classList.contains('is-open')) {
+                closeMenu();
+            }
+        });
+    };
+
     const initDonationBanner = () => {
         const form = document.querySelector('.donation-banner__form');
         if (!form) return;
@@ -323,6 +376,7 @@
         initPetsSlider();
         initTestimonialsSlider();
         initDonationBanner();
+        initHamburger();
     };
 
     if (document.readyState === 'loading') {

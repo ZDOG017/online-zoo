@@ -17,7 +17,12 @@
                 <a href="#" class="nav__logo" aria-label="Online Zoo home">
                     <img src="../../assets/icons/Logo.svg" alt="Online Zoo" width="96" height="50">
                 </a>
-                <ul class="nav__menu" role="menubar">
+                <button class="nav__hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                </button>
+                <ul class="nav__menu" id="nav-menu" role="menubar">
                     <li role="none"><a href="#" class="nav__link nav__link--active">About</a></li>
                     <li role="none"><a href="#" class="nav__link">Map</a></li>
                     <li role="none"><a href="#" class="nav__link">Zoos</a></li>
@@ -38,6 +43,21 @@
             </nav>
         </div>
     </header>
+
+    <div class="nav-overlay" id="nav-overlay" aria-hidden="true" aria-label="Mobile menu">
+        <button class="nav-overlay__close" type="button" aria-label="Close menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <ul class="nav-overlay__menu" role="menubar">
+            <li role="none"><a href="#" class="nav-overlay__link nav-overlay__link--active">About</a></li>
+            <li role="none"><a href="#" class="nav-overlay__link">Map</a></li>
+            <li role="none"><a href="#" class="nav-overlay__link">Zoos</a></li>
+            <li role="none"><a href="#" class="nav-overlay__link">Contact us</a></li>
+            <li role="none"><a href="#" class="nav-overlay__link">Design</a></li>
+        </ul>
+    </div>
 
     <main>
         <section class="hero">
@@ -503,6 +523,7 @@
                     You can help to look after the animals you love with your gift today
                 </p>
 
+                <div class="choose-favourite__cards-wrap">
                 <div class="choose-favourite__main">
                     <div class="choose-favourite__main-image">
                         <img src="../../assets/images/koala.jpg" alt="Koala looking from a tree" width="920" height="658" loading="lazy">
@@ -581,6 +602,7 @@
                             </button>
                         </div>
                     </article>
+                </div>
                 </div>
 
                 <a href="#" class="btn btn--outline-dark choose-favourite__button" aria-label="Choose your favourite animal to support">
