@@ -1252,6 +1252,91 @@ body {
     color: var(--color-white);
 }
 
+.map-section {
+    padding-top: 150px;
+    padding-bottom: 120px;
+    background-color: #FFFFFF;
+}
+
+.map-section__container {
+    max-width: 1400px;
+}
+
+.map-section__title {
+    text-align: center;
+    margin-bottom: 80px;
+    color: #20113D;
+}
+
+.map-section__map {
+    position: relative;
+    max-width: 1406px;
+    margin: 0 auto;
+}
+
+.map-section__image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.map-pin {
+    position: absolute;
+    width: 100px;
+    height: 144px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.map-pin img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.map-pin--eagles {
+    left: 13.2%;
+    top: 49.5%;
+}
+
+.map-pin--alligator {
+    left: 20.8%;
+    top: 47%;
+}
+
+.map-pin--gorilla {
+    left: 48%;
+    top: 53%;
+}
+
+.map-pin--lion {
+    left: 40%;
+    top: 52%;
+}
+
+.map-pin--lemur {
+    left: 56.5%;
+    top: 68%;
+}
+
+.map-pin--tiger {
+    left: 71%;
+    top: 56%;
+}
+
+.map-pin--panda {
+    left: 67%;
+    top: 41%;
+}
+
+.map-pin--koala {
+    left: 82%;
+    top: 72%;
+}
+
 .footer__social {
     display: flex;
     align-items: center;
