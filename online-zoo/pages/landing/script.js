@@ -248,10 +248,63 @@
         updateSlider();
     };
 
+    const initTestimonialsSlider = () => {
+        const prevBtn = document.querySelector('.testimonials__arrow--prev');
+        const nextBtn = document.querySelector('.testimonials__arrow--next');
+        const track = document.querySelector('.testimonials__track');
+        const slides = document.querySelectorAll('.testimonials__slide');
+        if (!prevBtn || !nextBtn || !track || slides.length === 0) return;
+
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        const updateSlider = () => {
+            track.style.transform = `translateX(-${currentSlide * 50}%)`;
+            slides.forEach((slide, i) => {
+                slide.setAttribute('aria-hidden', i !== currentSlide ? 'true' : 'false');
+            });
+            prevBtn.setAttribute('aria-disabled', currentSlide === 0 ? 'true' : 'false');
+            nextBtn.setAttribute('aria-disabled', currentSlide === totalSlides - 1 ? 'true' : 'false');
+        };
+
+        const handlePrev = () => {
+            if (currentSlide > 0) {
+                currentSlide -= 1;
+                updateSlider();
+            }
+        };
+
+        const handleNext = () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide += 1;
+                updateSlider();
+            }
+        };
+
+        prevBtn.addEventListener('click', handlePrev);
+        nextBtn.addEventListener('click', handleNext);
+
+        prevBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handlePrev();
+            }
+        });
+        nextBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleNext();
+            }
+        });
+
+        updateSlider();
+    };
+
     const init = () => {
         initCarePopup();
         initDonationForm();
         initPetsSlider();
+        initTestimonialsSlider();
     };
 
     if (document.readyState === 'loading') {

@@ -740,6 +740,24 @@ body {
     align-items: flex-start;
 }
 
+.testimonials__slider {
+    overflow: hidden;
+    width: 100%;
+}
+
+.testimonials__track {
+    display: flex;
+    flex-direction: row;
+    width: 200%;
+    transition: transform 0.4s ease;
+}
+
+.testimonials__slide {
+    flex: 0 0 50%;
+    min-width: 50%;
+    box-sizing: border-box;
+}
+
 .testimonials__grid {
     display: grid;
     grid-template-columns: 515px 515px;
@@ -851,6 +869,15 @@ body {
 
 .testimonials__arrow:hover {
     background-color: rgba(255, 255, 255, 0.08);
+}
+
+.testimonials__arrow[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.testimonials__arrow[aria-disabled="true"]:hover {
+    background-color: transparent;
 }
 
 .choose-favourite {
