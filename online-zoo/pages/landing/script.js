@@ -1,0 +1,206 @@
+(function () {
+    'use strict';
+
+    const POPUP_CARE_ID = 'popup-care';
+    const POPUP_FORM_ID = 'popup-donation-form';
+    const TOTAL_STEPS = 3;
+
+    const getPopup = (id) => document.getElementById(id);
+    const getCareTriggers = () => document.querySelectorAll('[data-popup="care"]');
+    const getFormTriggers = () => document.querySelectorAll('[data-popup="donation-form"]');
+
+    const openCarePopup = () => {
+        const overlay = getPopup(POPUP_CARE_ID);
+        if (!overlay) return;
+        overlay.setAttribute('aria-hidden', 'false');
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        const focusable = overlay.querySelector('button, [href], input, [tabindex]:not([tabindex="-1"])');
+        if (focusable) focusable.focus();
+    };
+
+    const closeCarePopup = () => {
+        const overlay = getPopup(POPUP_CARE_ID);
+        if (!overlay) return;
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+    };
+
+    const openDonationForm = (presetAmount) => {
+        const overlay = getPopup(POPUP_FORM_ID);
+        if (!overlay) return;
+        overlay.setAttribute('aria-hidden', 'false');
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        setDonationStep(1);
+        if (presetAmount != null) {
+            const btn = overlay.querySelector(`.donation-form__amount-btn[data-amount="${presetAmount}"]`);
+            if (btn) {
+                overlay.querySelectorAll('.donation-form__amount-btn').forEach((b) => b.classList.remove('is-selected'));
+                btn.classList.add('is-selected');
+            }
+        }
+        const firstFocus = overlay.querySelector('.donation-form__amount-btn, .donation-form__input');
+        if (firstFocus) firstFocus.focus();
+    };
+
+    const closeDonationForm = () => {
+        const overlay = getPopup(POPUP_FORM_ID);
+        if (!overlay) return;
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+        closePetDropdown();
+    };
+
+    const setDonationStep = (step) => {
+        const overlay = getPopup(POPUP_FORM_ID);
+        if (!overlay) return;
+        const steps = overlay.querySelectorAll('.donation-form__step');
+        const dots = overlay.querySelectorAll('.donation-form__step-dot');
+        const backBtn = overlay.querySelector('.donation-form__back');
+        const nextBtn = overlay.querySelector('.donation-form__next');
+        const completeBtn = overlay.querySelector('.donation-form__complete');
+
+        steps.forEach((s, i) => {
+            s.hidden = parseInt(s.dataset.step, 10) !== step;
+        });
+        dots.forEach((d, i) => {
+            const n = parseInt(d.dataset.step, 10);
+            d.classList.toggle('is-active', n <= step);
+            d.setAttribute('aria-current', n === step ? 'step' : null);
+        });
+
+        if (backBtn) backBtn.hidden = step === 1;
+        if (nextBtn) nextBtn.hidden = step === 3;
+        if (completeBtn) completeBtn.hidden = step !== 3;
+    };
+
+    const closePetDropdown = () => {
+        const trigger = document.getElementById('donation-pet-trigger');
+        const dropdown = document.getElementById('donation-pet-dropdown');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        if (dropdown) dropdown.classList.remove('is-open');
+    };
+
+    const handleOverlayClick = (e, popupId) => {
+        if (e.target !== e.currentTarget) return;
+        if (popupId === POPUP_CARE_ID) closeCarePopup();
+        else if (popupId === POPUP_FORM_ID) closeDonationForm();
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key !== 'Escape') return;
+        const care = getPopup(POPUP_CARE_ID);
+        const form = getPopup(POPUP_FORM_ID);
+        if (form && form.getAttribute('aria-hidden') === 'false') {
+            const dropdown = document.getElementById('donation-pet-dropdown');
+            if (dropdown && dropdown.classList.contains('is-open')) closePetDropdown();
+            else closeDonationForm();
+        } else if (care && care.getAttribute('aria-hidden') === 'false') closeCarePopup();
+    };
+
+    const initCarePopup = () => {
+        const overlay = getPopup(POPUP_CARE_ID);
+        if (!overlay) return;
+        overlay.querySelector('.popup__close')?.addEventListener('click', closeCarePopup);
+        overlay.addEventListener('click', (e) => handleOverlayClick(e, POPUP_CARE_ID));
+
+        getCareTriggers().forEach((trigger) => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                openCarePopup();
+            });
+        });
+
+        overlay.querySelectorAll('.popup__amount-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const amount = btn.classList.contains('popup__amount-btn--other') ? null : btn.dataset.amount;
+                closeCarePopup();
+                openDonationForm(amount ? parseInt(amount, 10) : null);
+            });
+        });
+    };
+
+    const initDonationForm = () => {
+        const overlay = getPopup(POPUP_FORM_ID);
+        if (!overlay) return;
+
+        overlay.querySelector('.donation-form__close')?.addEventListener('click', closeDonationForm);
+        overlay.addEventListener('click', (e) => handleOverlayClick(e, POPUP_FORM_ID));
+
+        overlay.querySelector('.donation-form__next')?.addEventListener('click', () => {
+            const current = overlay.querySelector('.donation-form__step:not([hidden])');
+            if (!current) return;
+            const step = parseInt(current.dataset.step, 10);
+            if (step < TOTAL_STEPS) setDonationStep(step + 1);
+        });
+
+        overlay.querySelector('.donation-form__back')?.addEventListener('click', () => {
+            const current = overlay.querySelector('.donation-form__step:not([hidden])');
+            if (!current) return;
+            const step = parseInt(current.dataset.step, 10);
+            if (step > 1) setDonationStep(step - 1);
+        });
+
+        overlay.querySelector('.donation-form__complete')?.addEventListener('click', () => {
+            closeDonationForm();
+        });
+
+        overlay.querySelectorAll('.donation-form__amount-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                overlay.querySelectorAll('.donation-form__amount-btn').forEach((b) => b.classList.remove('is-selected'));
+                btn.classList.add('is-selected');
+            });
+        });
+
+        const petTrigger = document.getElementById('donation-pet-trigger');
+        const petDropdown = document.getElementById('donation-pet-dropdown');
+        if (petTrigger && petDropdown) {
+            petTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = petDropdown.classList.toggle('is-open');
+                petTrigger.setAttribute('aria-expanded', isOpen);
+            });
+            petDropdown.querySelectorAll('.donation-form__pet-list li').forEach((li) => {
+                li.addEventListener('click', () => {
+                    const name = li.textContent;
+                    petTrigger.querySelector('.donation-form__pet-btn-text').textContent = name;
+                    petTrigger.querySelector('.donation-form__pet-btn-text').style.color = '#000000';
+                    petDropdown.querySelectorAll('li').forEach((l) => l.classList.remove('is-selected'));
+                    li.classList.add('is-selected');
+                    closePetDropdown();
+                });
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            const wrap = petTrigger?.closest('.donation-form__pet-select-wrap');
+            if (petDropdown?.classList.contains('is-open') && !wrap?.contains(e.target) && !petDropdown.contains(e.target)) {
+                closePetDropdown();
+            }
+        });
+        petDropdown?.addEventListener('click', (e) => e.stopPropagation());
+    };
+
+    getFormTriggers().forEach((trigger) => {
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            openDonationForm(null);
+        });
+    });
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    const init = () => {
+        initCarePopup();
+        initDonationForm();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();

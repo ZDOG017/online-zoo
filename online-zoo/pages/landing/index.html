@@ -335,7 +335,7 @@
                             <p class="pay-feed__description">
                                 After your donation, the animal receives its favorite foods. You can support your favorite animals or any animal you care about and make a real personal impact. Never doubt that your donation can make a difference even if it is small.
                             </p>
-                            <a href="#" class="btn btn--primary pay-feed__cta" aria-label="Donate now to support the animals">
+                            <a href="#" class="btn btn--primary pay-feed__cta" data-popup="care" aria-label="Donate now to support the animals">
                                 <span>Donate now</span>
                                 <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
@@ -455,7 +455,7 @@
                             <p class="donate-card__text">
                                 Your $30 could give Lucas a slice of panda cake, made with our secret recipe.
                             </p>
-                            <button class="donate-card__feed-btn" type="button">
+                            <button class="donate-card__feed-btn" type="button" data-popup="donation-form">
                                 <span>Feed</span>
                                 <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path d="M0 11H21.5" stroke="#F58021" stroke-width="2" stroke-linecap="round"/>
@@ -475,7 +475,7 @@
                             <p class="donate-card__text">
                                 Your $150 will help to care for Senja, a Sumatran tiger, for three weeks.
                             </p>
-                            <button class="donate-card__feed-btn" type="button">
+                            <button class="donate-card__feed-btn" type="button" data-popup="donation-form">
                                 <span>Feed</span>
                                 <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path d="M0 11H21.5" stroke="#F58021" stroke-width="2" stroke-linecap="round"/>
@@ -493,7 +493,7 @@
                             <p class="donate-card__text">
                                 With your support, we can give Andy his favorite fruits, especially when it is not fruit season in its natural habitat.
                             </p>
-                            <button class="donate-card__feed-btn" type="button">
+                            <button class="donate-card__feed-btn" type="button" data-popup="donation-form">
                                 <span>Feed</span>
                                 <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path d="M0 11H21.5" stroke="#F58021" stroke-width="2" stroke-linecap="round"/>
@@ -511,7 +511,7 @@
                             <p class="donate-card__text">
                                 Sam &amp; Lora have hatched and raised numerous young and will be happy with your help.
                             </p>
-                            <button class="donate-card__feed-btn" type="button">
+                            <button class="donate-card__feed-btn" type="button" data-popup="donation-form">
                                 <span>Feed</span>
                                 <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path d="M0 11H21.5" stroke="#F58021" stroke-width="2" stroke-linecap="round"/>
@@ -587,5 +587,151 @@
             </div>
         </div>
     </footer>
+
+    <!-- Popup: Together we care, save and protect! -->
+    <div class="popup-overlay" id="popup-care" aria-hidden="true" aria-modal="true" role="dialog" aria-labelledby="popup-care-title">
+        <div class="popup popup--donation">
+            <button type="button" class="popup__close" aria-label="Close popup" tabindex="0">
+                <span class="popup__close-icon" aria-hidden="true"></span>
+            </button>
+            <div class="popup__image">
+                <img src="../../assets/images/popup-donation.jpg" alt="Hand and animal paw together" width="1160" height="387" loading="eager">
+            </div>
+            <div class="popup__content">
+                <h2 class="popup__heading" id="popup-care-title">Together we care, save and protect!</h2>
+                <p class="popup__text">
+                    Your most generous gift not only cares for countless animals, but it also offers hope and a vital lifeline to the world's most endangered wildlife relying on us to survive.
+                </p>
+                <div class="popup__actions">
+                    <button type="button" class="popup__amount-btn" data-amount="20">$20</button>
+                    <button type="button" class="popup__amount-btn" data-amount="30">$30</button>
+                    <button type="button" class="popup__amount-btn" data-amount="50">$50</button>
+                    <button type="button" class="popup__amount-btn" data-amount="80">$80</button>
+                    <button type="button" class="popup__amount-btn" data-amount="100">$100</button>
+                    <button type="button" class="popup__amount-btn popup__amount-btn--other">Other amount</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popup-donation-form" aria-hidden="true" aria-modal="true" role="dialog" aria-labelledby="donation-form-title">
+        <div class="donation-form">
+            <button type="button" class="donation-form__close popup__close" aria-label="Close" tabindex="0">
+                <span class="popup__close-icon" aria-hidden="true"></span>
+            </button>
+            <header class="donation-form__header">
+                <h2 class="donation-form__title" id="donation-form-title">Make your donation</h2>
+            </header>
+
+            <!-- Step 1: Donation Information -->
+            <div class="donation-form__step" data-step="1">
+                <h3 class="donation-form__section-title">Donation Information:</h3>
+                <div class="donation-form__divider" aria-hidden="true"></div>
+                <div class="donation-form__section">
+                    <label class="donation-form__label">* Choose your donation amount:</label>
+                    <div class="donation-form__amounts">
+                        <button type="button" class="donation-form__amount-btn" data-amount="10">$10</button>
+                        <button type="button" class="donation-form__amount-btn" data-amount="20">$20</button>
+                        <button type="button" class="donation-form__amount-btn" data-amount="30">$30</button>
+                        <button type="button" class="donation-form__amount-btn" data-amount="50">$50</button>
+                        <button type="button" class="donation-form__amount-btn" data-amount="80">$80</button>
+                        <button type="button" class="donation-form__amount-btn" data-amount="100">$100</button>
+                    </div>
+                    <div class="donation-form__other-row">
+                        <button type="button" class="donation-form__other-btn">Other amount</button>
+                        <input type="text" class="donation-form__input donation-form__input--amount" placeholder="" inputmode="decimal" aria-label="Other amount">
+                    </div>
+                    <div class="donation-form__pet-row">
+                        <span class="donation-form__pet-label-btn">For special pet</span>
+                        <div class="donation-form__pet-select-wrap">
+                        <button type="button" class="donation-form__pet-btn" id="donation-pet-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Choose your favourite pet">
+                            <span class="donation-form__pet-btn-text">Choose your favourite</span>
+                            <span class="donation-form__pet-chevron" aria-hidden="true"></span>
+                        </button>
+                        <div class="donation-form__pet-dropdown" id="donation-pet-dropdown" role="listbox" aria-hidden="true">
+                            <ul class="donation-form__pet-list" role="listbox">
+                                <li role="option" data-value="lukas" tabindex="0">Lukas the Panda</li>
+                                <li role="option" data-value="andy" tabindex="0">Andy the Lemur</li>
+                                <li role="option" data-value="glen" tabindex="0">Glen the Gorilla</li>
+                                <li role="option" data-value="mike" tabindex="0">Mike the Alligator</li>
+                                <li role="option" data-value="sam-lora" tabindex="0">Sam &amp; Lora the eagles family</li>
+                                <li role="option" data-value="liz" tabindex="0">Liz the Koala</li>
+                                <li role="option" data-value="shake" tabindex="0">Shake the Lion</li>
+                                <li role="option" data-value="senja" tabindex="0">Senja the Tiger</li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                    <label class="donation-form__checkbox-label">
+                        <input type="checkbox" class="donation-form__checkbox" name="recurring">
+                        <span>Make this a monthly recurring gift</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Step 2: Billing Information -->
+            <div class="donation-form__step" data-step="2" hidden>
+                <h3 class="donation-form__section-title">Billing Information:</h3>
+                <div class="donation-form__divider" aria-hidden="true"></div>
+                <div class="donation-form__section">
+                    <label class="donation-form__label">* Your Name</label>
+                    <input type="text" class="donation-form__input donation-form__input--full" placeholder="First and last name" aria-required="true">
+                    <label class="donation-form__label">* Your Email Address</label>
+                    <input type="email" class="donation-form__input donation-form__input--full" placeholder="Enter your email" aria-required="true">
+                    <p class="donation-form__disclaimer">You will receive emails from the Online Zoo, including updates and news on the latest discoveries and translations. You can unsubscribe at any time.</p>
+                </div>
+            </div>
+
+            <!-- Step 3: Payment Information -->
+            <div class="donation-form__step" data-step="3" hidden>
+                <h3 class="donation-form__section-title">Payment Information:</h3>
+                <div class="donation-form__divider" aria-hidden="true"></div>
+                <div class="donation-form__section donation-form__section--payment">
+                    <div class="donation-form__payment-row">
+                        <div class="donation-form__field">
+                            <label class="donation-form__label" for="donation-card">* Credit Card Number</label>
+                            <input type="text" id="donation-card" class="donation-form__input donation-form__input--card" placeholder="" inputmode="numeric" maxlength="19" aria-required="true">
+                        </div>
+                        <div class="donation-form__field donation-form__field--cvv">
+                            <label class="donation-form__label" for="donation-cvv">* CVV Number</label>
+                            <input type="text" id="donation-cvv" class="donation-form__input donation-form__input--cvv" placeholder="" inputmode="numeric" maxlength="4" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="donation-form__expiry-group">
+                        <label class="donation-form__label">* Expiration Date</label>
+                        <div class="donation-form__expiry-row">
+                            <div class="donation-form__select-wrap">
+                                <input type="text" class="donation-form__input donation-form__input--select" placeholder="Month" readonly aria-label="Month">
+                                <span class="donation-form__select-chevron" aria-hidden="true"></span>
+                            </div>
+                            <div class="donation-form__select-wrap">
+                                <input type="text" class="donation-form__input donation-form__input--select" placeholder="Year" readonly aria-label="Year">
+                                <span class="donation-form__select-chevron" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="donation-form__footer">
+                <div class="donation-form__steps" aria-label="Form progress">
+                    <span class="donation-form__step-dot" data-step="1" aria-current="step"></span>
+                    <span class="donation-form__step-dot" data-step="2"></span>
+                    <span class="donation-form__step-dot" data-step="3"></span>
+                </div>
+                <button type="button" class="donation-form__back" data-action="back" hidden>Back</button>
+                <button type="button" class="donation-form__next" data-action="next">
+                    <span>Next</span>
+                    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" aria-hidden="true"><path d="M0 11H21.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 1L23 11L13 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button type="button" class="donation-form__complete" data-action="complete" hidden>
+                    <span>Complete donation</span>
+                    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" aria-hidden="true"><path d="M0 11H21.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 1L23 11L13 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
