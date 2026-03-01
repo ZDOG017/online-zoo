@@ -2985,3 +2985,565 @@ body {
         min-width: 360px;
     }
 }
+
+/* =======================
+   Zoos page (Panda)
+   ======================= */
+
+.zoos-page {
+    padding-left: 0;
+}
+
+.zoos-sidebar {
+    position: fixed;
+    left: 0;
+    top: 110px;
+    bottom: 0;
+    width: 220px;
+    background-color: var(--color-dark);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.zoos-sidebar__live-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1;
+    padding: 6px 40px;
+    border-radius: 0 5px 5px 0;
+    margin-bottom: 30px;
+}
+
+.zoos-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    flex: 1;
+}
+
+.zoos-sidebar__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    transition: opacity 0.2s ease;
+}
+
+.zoos-sidebar__item:hover {
+    opacity: 0.9;
+}
+
+.zoos-sidebar__item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.zoos-sidebar__item--active {
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 4px var(--color-primary);
+}
+
+.zoos-sidebar__item--active img {
+    filter: none;
+}
+
+.zoos-sidebar__more {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-dark);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    transition: opacity 0.2s ease;
+}
+
+.zoos-sidebar__more:hover {
+    opacity: 0.85;
+}
+
+.zoos-sidebar__more svg {
+    transform: rotate(-90deg);
+}
+
+.zoos-main {
+    margin-left: 220px;
+    padding-top: 54px;
+    padding-bottom: 120px;
+}
+
+.zoos-cams__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 40px;
+    padding: 0 var(--container-padding);
+    max-width: var(--container-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.zoos-cams__title {
+    font-weight: 600;
+    font-size: 54px;
+    line-height: 1;
+    color: var(--color-accent);
+    text-transform: uppercase;
+}
+
+.zoos-cams__donate-btn {
+    flex-shrink: 0;
+}
+
+.zoos-cams__player-wrap {
+    max-width: 1400px;
+    margin: 0 auto 80px;
+    padding: 0 var(--container-padding);
+}
+
+.zoos-cams__player {
+    position: relative;
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+}
+
+.zoos-cams__player-label {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    z-index: 2;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.3;
+    color: var(--color-white);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.zoos-cams__video-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 787px;
+    background-color: var(--color-black);
+}
+
+.zoos-cams__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.zoos-cams__play-overlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+    transition: opacity 0.2s ease;
+}
+
+.zoos-cams__play-overlay:hover {
+    opacity: 0.9;
+}
+
+.zoos-cams__play-overlay svg {
+    width: 80px;
+    height: 80px;
+}
+
+.zoos-cams__watermark {
+    position: absolute;
+    right: 20px;
+    bottom: 60px;
+    z-index: 2;
+    opacity: 0.9;
+}
+
+.zoos-cams__watermark img {
+    width: 105px;
+    height: auto;
+}
+
+.zoos-cams__more {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+.zoos-cams__more-title {
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--color-black);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.zoos-cams__carousel-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.zoos-cams__arrow {
+    flex-shrink: 0;
+    width: 74px;
+    height: 74px;
+    padding: 0;
+    border: 2px solid var(--color-dark);
+    background: transparent;
+    border-radius: 5px;
+    color: var(--color-dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.zoos-cams__arrow:hover {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+}
+
+.zoos-cams__carousel {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.zoos-cams__carousel-track {
+    display: flex;
+    gap: 20px;
+}
+
+.zoos-cams__card {
+    flex: 0 0 320px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border: 3px solid var(--color-primary);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: opacity 0.2s ease;
+}
+
+.zoos-cams__card:hover {
+    opacity: 0.95;
+}
+
+.zoos-cams__card-image {
+    position: relative;
+    width: 100%;
+    height: 209px;
+    background-color: var(--color-black);
+}
+
+.zoos-cams__card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.zoos-cams__card-badge {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1;
+    padding: 6px 40px;
+    border-radius: 0 0 5px 0;
+}
+
+.zoos-cams__card-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 46px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    clip-path: polygon(0 0, 0 100%, 100% 50%);
+}
+
+.zoos-cams__card-label {
+    font-weight: 500;
+    font-size: 18px;
+    padding: 12px 16px;
+    background-color: var(--color-white);
+}
+
+.zoos-donate.donation-banner {
+    margin-top: 0;
+    padding: 70px 0;
+}
+
+.zoos-donate__title {
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--color-white);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.zoos-donate__description {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-white);
+    max-width: 873px;
+}
+
+.zoos-did-you-know {
+    padding: 80px 0;
+}
+
+.zoos-did-you-know__card {
+    max-width: 1040px;
+    margin: 0 auto;
+    background-color: var(--color-white);
+    border-radius: 5px;
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.25);
+    padding: 46px 60px 80px;
+    text-align: center;
+}
+
+.zoos-did-you-know__title {
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    margin-bottom: 46px;
+}
+
+.zoos-did-you-know__text {
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.3;
+    color: var(--color-black);
+}
+
+.zoos-info {
+    padding-bottom: 80px;
+}
+
+.zoos-info__grid {
+    display: grid;
+    grid-template-columns: 1fr 440px;
+    gap: 80px;
+    align-items: start;
+    margin-bottom: 60px;
+}
+
+.zoos-info__list {
+    margin: 0 0 40px;
+}
+
+.zoos-info__row {
+    display: grid;
+    grid-template-columns: 234px 1fr;
+    gap: 0 20px;
+    align-items: baseline;
+    margin-bottom: 24px;
+}
+
+.zoos-info__row:last-child {
+    margin-bottom: 0;
+}
+
+.zoos-info__row dt {
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.3;
+    color: var(--color-black);
+}
+
+.zoos-info__row dd {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-black);
+    margin: 0;
+}
+
+.zoos-info__map-btn {
+    display: inline-flex;
+}
+
+.zoos-info__image-wrap {
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.zoos-info__image {
+    display: block;
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+}
+
+.zoos-info__paragraph {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-black);
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+    .zoos-sidebar {
+        width: 180px;
+        padding-top: 20px;
+    }
+
+    .zoos-sidebar__item {
+        width: 100px;
+        height: 100px;
+    }
+
+    .zoos-sidebar__item img {
+        width: 64px;
+        height: 64px;
+    }
+
+    .zoos-main {
+        margin-left: 180px;
+        padding-top: 40px;
+    }
+
+    .zoos-cams__title {
+        font-size: 42px;
+    }
+
+    .zoos-cams__more-title {
+        font-size: 36px;
+    }
+
+    .zoos-info__grid {
+        grid-template-columns: 1fr 360px;
+        gap: 50px;
+    }
+
+    .zoos-info__image {
+        height: 360px;
+    }
+
+    .zoos-info__row {
+        grid-template-columns: 200px 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .zoos-sidebar {
+        display: none;
+    }
+
+    .zoos-main {
+        margin-left: 0;
+        padding-top: 30px;
+        padding-bottom: 60px;
+    }
+
+    .zoos-cams__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .zoos-cams__title {
+        font-size: 36px;
+    }
+
+    .zoos-cams__carousel-wrap {
+        flex-wrap: wrap;
+    }
+
+    .zoos-cams__arrow {
+        width: 50px;
+        height: 50px;
+    }
+
+    .zoos-cams__carousel-track {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px;
+    }
+
+    .zoos-cams__card {
+        flex: 0 0 280px;
+        min-width: 280px;
+    }
+
+    .zoos-cams__card-image {
+        height: 180px;
+    }
+
+    .zoos-did-you-know__card {
+        padding: 30px 20px 50px;
+    }
+
+    .zoos-did-you-know__title {
+        font-size: 36px;
+        margin-bottom: 24px;
+    }
+
+    .zoos-did-you-know__text {
+        font-size: 18px;
+    }
+
+    .zoos-info__grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .zoos-info__row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .zoos-info__image {
+        height: 280px;
+    }
+}

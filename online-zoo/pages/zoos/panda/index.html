@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Zoo – Live Panda Cams</title>
+    <link rel="icon" type="image/svg+xml" href="../../../assets/icons/Favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../landing/style.css">
+</head>
+<body class="zoos-page">
+    <header class="header">
+        <div class="container">
+            <nav class="nav" aria-label="Main navigation">
+                <a href="../../landing/index.html" class="nav__logo" aria-label="Online Zoo home">
+                    <img src="../../../assets/icons/Logo.svg" alt="Online Zoo" width="96" height="50">
+                </a>
+                <button class="nav__hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                </button>
+                <ul class="nav__menu" id="nav-menu" role="menubar">
+                    <li role="none"><a href="../../landing/index.html" class="nav__link">About</a></li>
+                    <li role="none"><a href="../../map/index.html" class="nav__link">Map</a></li>
+                    <li role="none"><a href="./index.html" class="nav__link nav__link--active">Zoos</a></li>
+                    <li role="none"><a href="#" class="nav__link">Contact us</a></li>
+                    <li role="none"><a href="#" class="nav__link">Design</a></li>
+                </ul>
+                <div class="nav__social">
+                    <a href="#" class="nav__social-link" aria-label="YouTube">
+                        <img src="../../../assets/icons/YouTube.svg" alt="youtube" width="40" height="40">
+                    </a>
+                    <a href="#" class="nav__social-link" aria-label="Instagram">
+                        <img src="../../../assets/icons/Instagram.svg" alt="instagram" width="40" height="40">
+                    </a>
+                    <a href="#" class="nav__social-link" aria-label="Facebook">
+                        <img src="../../../assets/icons/Facebook.svg" alt="facebook" width="40" height="40">
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="nav-overlay" aria-hidden="true" aria-label="Mobile menu">
+        <button class="nav-overlay__close" type="button" aria-label="Close menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <ul class="nav-overlay__menu" role="menubar">
+            <li role="none"><a href="../../landing/index.html" class="nav-overlay__link">About</a></li>
+            <li role="none"><a href="../../map/index.html" class="nav-overlay__link">Map</a></li>
+            <li role="none"><a href="./index.html" class="nav-overlay__link nav-overlay__link--active">Zoos</a></li>
+            <li role="none"><a href="#" class="nav-overlay__link">Contact us</a></li>
+            <li role="none"><a href="#" class="nav-overlay__link">Design</a></li>
+        </ul>
+    </div>
+
+    <!-- Left sidebar: live animal cams nav -->
+    <aside class="zoos-sidebar" aria-label="Live animal cams">
+        <div class="zoos-sidebar__live-badge">
+            <span>LIVE</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M15 5L5 15M5 5L15 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <nav class="zoos-sidebar__nav">
+            <a href="./index.html" class="zoos-sidebar__item zoos-sidebar__item--active" aria-label="Live Panda Cams" aria-current="page">
+                <img src="../../../assets/icons/animal-location-panda.svg" alt="" width="80" height="80" loading="lazy">
+            </a>
+            <a href="#" class="zoos-sidebar__item" aria-label="Live Eagles Cams">
+                <img src="../../../assets/icons/animal-location-eagles.svg" alt="" width="80" height="80" loading="lazy">
+            </a>
+            <a href="#" class="zoos-sidebar__item" aria-label="Live Gorilla Cams">
+                <img src="../../../assets/icons/animal-location-gorilla.svg" alt="" width="80" height="80" loading="lazy">
+            </a>
+            <a href="#" class="zoos-sidebar__item" aria-label="Live Lemur Cams">
+                <img src="../../../assets/icons/animal-location-lemur.svg" alt="" width="80" height="80" loading="lazy">
+            </a>
+        </nav>
+        <button class="zoos-sidebar__more" type="button" aria-label="More animal cams">
+            <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M1 1L7.5 7.5L1 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </aside>
+
+    <main class="zoos-main">
+        <section class="zoos-cams" aria-label="Live Panda Cams">
+            <div class="zoos-cams__header">
+                <h1 class="zoos-cams__title">Live Panda Cams</h1>
+                <a href="#zoos-donate" class="btn btn--primary zoos-cams__donate-btn" aria-label="Donate now">
+                    <span>Donate now</span>
+                    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="zoos-cams__player-wrap">
+                <div class="zoos-cams__player" aria-label="Lucas, the Giant Panda cam 1">
+                    <div class="zoos-cams__player-label">Lucas, the Giant Panda cam 1</div>
+                    <div class="zoos-cams__video-wrap">
+                        <video class="zoos-cams__video" poster="../../../assets/images/Panda live.jpg" controls preload="metadata" aria-label="Live panda cam 1">
+                            <source src="#" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <button type="button" class="zoos-cams__play-overlay" aria-label="Play video">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="24" cy="24" r="23" stroke="white" stroke-width="2" fill="rgba(0,0,0,0.3)"/>
+                                <path d="M20 16V32L32 24L20 16Z" fill="white"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="zoos-cams__watermark">
+                        <img src="../../../assets/icons/Logo.svg" alt="Online Zoo" width="105" height="55" loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+            <div class="zoos-cams__more">
+                <h2 class="zoos-cams__more-title">More Live Views</h2>
+                <div class="zoos-cams__carousel-wrap">
+                    <button class="zoos-cams__arrow zoos-cams__arrow--prev" type="button" aria-label="Previous cams" tabindex="0">
+                        <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M23 11H1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M11 21L1 11L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="zoos-cams__carousel" aria-roledescription="carousel">
+                        <div class="zoos-cams__carousel-track">
+                            <a href="#" class="zoos-cams__card" aria-label="Cam 1">
+                                <div class="zoos-cams__card-image">
+                                    <img src="../../../assets/images/panda live.jpg" alt="Panda cam 1" width="320" height="209" loading="lazy">
+                                    <span class="zoos-cams__card-badge">LIVE</span>
+                                    <span class="zoos-cams__card-play" aria-hidden="true"></span>
+                                </div>
+                                <span class="zoos-cams__card-label">Cam 1</span>
+                            </a>
+                            <a href="#" class="zoos-cams__card" aria-label="Cam 2">
+                                <div class="zoos-cams__card-image">
+                                    <img src="../../../assets/images/panda live.jpg" alt="Panda cam 2" width="320" height="209" loading="lazy">
+                                    <span class="zoos-cams__card-badge">LIVE</span>
+                                    <span class="zoos-cams__card-play" aria-hidden="true"></span>
+                                </div>
+                                <span class="zoos-cams__card-label">Cam 2</span>
+                            </a>
+                            <a href="#" class="zoos-cams__card" aria-label="Cam 3">
+                                <div class="zoos-cams__card-image">
+                                    <img src="../../../assets/images/panda live.jpg" alt="Panda cam 3" width="320" height="209" loading="lazy">
+                                    <span class="zoos-cams__card-badge">LIVE</span>
+                                    <span class="zoos-cams__card-play" aria-hidden="true"></span>
+                                </div>
+                                <span class="zoos-cams__card-label">Cam 3</span>
+                            </a>
+                        </div>
+                    </div>
+                    <button class="zoos-cams__arrow zoos-cams__arrow--next" type="button" aria-label="Next cams" tabindex="0">
+                        <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M0 11H21.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M13 1L23 11L13 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="zoos-donate donation-banner" id="zoos-donate" aria-label="Make the bamboo donation">
+            <div class="container">
+                <div class="donation-banner__inner zoos-donate__inner">
+                    <div class="donation-banner__text zoos-donate__text">
+                        <h2 class="zoos-donate__title">Make the Bamboo Donation!</h2>
+                        <p class="zoos-donate__description">Our process for bamboo donations first starts with a site evaluation. It is important that our team sees where the bamboo is growing, then determining if the bamboo is a species that our animals are currently eating. Thank you for your interest in donating bamboo for our pandas.</p>
+                    </div>
+                    <form class="donation-banner__form zoos-donate__form" aria-label="Quick donation form">
+                        <span class="donation-banner__form-label">Quick Donate</span>
+                        <div class="donation-banner__form-group">
+                            <input type="text" class="donation-banner__input" placeholder="$ DONATION AMOUNT" aria-label="Enter donation amount">
+                            <button type="submit" class="donation-banner__submit" aria-label="Submit donation">
+                                <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="zoos-did-you-know" aria-label="Did you know">
+            <div class="container">
+                <div class="zoos-did-you-know__card">
+                    <h2 class="zoos-did-you-know__title">Did You Know?</h2>
+                    <p class="zoos-did-you-know__text">Pandas are often seen eating in a relaxed sitting posture, with their hind legs stretched out before them. They may appear sedentary, but they are skilled tree-climbers and efficient swimmers.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="zoos-info" aria-label="Giant Panda information">
+            <div class="container">
+                <div class="zoos-info__grid">
+                    <div class="zoos-info__text">
+                        <dl class="zoos-info__list">
+                            <div class="zoos-info__row">
+                                <dt>Common name:</dt>
+                                <dd>Giant Panda</dd>
+                            </div>
+                            <div class="zoos-info__row">
+                                <dt>Scientific name:</dt>
+                                <dd>Ailuropoda melanoleuca</dd>
+                            </div>
+                            <div class="zoos-info__row">
+                                <dt>Type:</dt>
+                                <dd>Herbivore</dd>
+                            </div>
+                            <div class="zoos-info__row">
+                                <dt>Size:</dt>
+                                <dd>4 to 5 feet</dd>
+                            </div>
+                            <div class="zoos-info__row">
+                                <dt>Diet:</dt>
+                                <dd>Omnivore</dd>
+                            </div>
+                            <div class="zoos-info__row">
+                                <dt>Habitat:</dt>
+                                <dd>Forests</dd>
+                            </div>
+                            <div class="zoos-info__row">
+                                <dt>Range:</dt>
+                                <dd>Eastern Asia</dd>
+                            </div>
+                        </dl>
+                        <a href="../../map/index.html" class="btn btn--primary zoos-info__map-btn" aria-label="View animal on map">
+                            <span>View map</span>
+                            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="zoos-info__image-wrap">
+                        <img src="../../../assets/images/panda-info.jpg" alt="Giant Panda" class="zoos-info__image" width="440" height="440" loading="lazy">
+                    </div>
+                </div>
+                <p class="zoos-info__paragraph">Giant pandas are very unusual animals that eat almost exclusively bamboo, which is very low in nutrients. Because of this, they have many unique adaptations for their low-energy lifestyle. Giant pandas are solitary. They have a highly developed sense of smell that males use to avoid each other and to find females for mating in the spring. After a five-month pregnancy, females give birth to a cub or two, though they cannot care for both twins. The blind infants weigh only 5 ounces at birth and cannot crawl until they reach three months of age. They are born white, and develop their much loved coloring later. Habitat loss is the primary threat to this species. Its popularity around the world has helped the giant panda become the focus of successful conservation programs.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container footer__container">
+            <div class="footer__top">
+                <div class="footer__logos">
+                    <a href="../../landing/index.html" class="footer__logo" aria-label="Online Zoo home">
+                        <img src="../../../assets/icons/Logo_footer.svg" alt="Online Zoo" width="96" height="50" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__logo footer__logo--yem" aria-label="Yem Digital">
+                        <img src="../../../assets/icons/Yem%20Digital.svg" alt="Yem Digital" width="50" height="50" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__logo footer__logo--rss" aria-label="RS School">
+                        <img src="../../../assets/icons/rs_school_js%20logo.svg" alt="RS School" width="138" height="51" loading="lazy">
+                    </a>
+                </div>
+                <nav class="footer__nav" aria-label="Footer navigation">
+                    <ul class="footer__menu" role="menubar">
+                        <li role="none"><a href="../../landing/index.html" class="footer__link">About</a></li>
+                        <li role="none"><a href="../../map/index.html" class="footer__link">Map</a></li>
+                        <li role="none"><a href="./index.html" class="footer__link">Zoos</a></li>
+                        <li role="none"><a href="#" class="footer__link">Contact us</a></li>
+                        <li role="none"><a href="#" class="footer__link">Design</a></li>
+                    </ul>
+                </nav>
+                <button class="footer__donate-btn" type="button" aria-label="Donate for volunteers">
+                    <span>Donate for volunteers</span>
+                    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="footer__divider" aria-hidden="true"></div>
+            <div class="footer__bottom">
+                <div class="footer__copyright">
+                    <span>© 2021 DinaK</span>
+                    <span>© Yem Digital</span>
+                    <span>© RSSchool</span>
+                </div>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link" aria-label="YouTube">
+                        <img src="../../../assets/icons/YouTube.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="Instagram">
+                        <img src="../../../assets/icons/Instagram.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="Facebook">
+                        <img src="../../../assets/icons/Facebook.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../landing/script.js"></script>
+</body>
+</html>
