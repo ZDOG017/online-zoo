@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Zoo – Map</title>
+    <title>Online Zoo – Contact us</title>
     <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,9 +24,9 @@
                 </button>
                 <ul class="nav__menu" id="nav-menu" role="menubar">
                     <li role="none"><a href="../landing/index.html" class="nav__link">About</a></li>
-                    <li role="none"><a href="./index.html" class="nav__link nav__link--active">Map</a></li>
+                    <li role="none"><a href="../map/index.html" class="nav__link">Map</a></li>
                     <li role="none"><a href="../zoos/panda/index.html" class="nav__link">Zoos</a></li>
-                    <li role="none"><a href="../contact/index.html" class="nav__link">Contact us</a></li>
+                    <li role="none"><a href="./index.html" class="nav__link nav__link--active">Contact us</a></li>
                     <li role="none"><a href="#" class="nav__link">Design</a></li>
                 </ul>
                 <div class="nav__social">
@@ -52,59 +52,65 @@
         </button>
         <ul class="nav-overlay__menu" role="menubar">
             <li role="none"><a href="../landing/index.html" class="nav-overlay__link">About</a></li>
-            <li role="none"><a href="./index.html" class="nav-overlay__link nav-overlay__link--active">Map</a></li>
+            <li role="none"><a href="../map/index.html" class="nav-overlay__link">Map</a></li>
             <li role="none"><a href="../zoos/panda/index.html" class="nav-overlay__link">Zoos</a></li>
-            <li role="none"><a href="../contact/index.html" class="nav-overlay__link">Contact us</a></li>
+            <li role="none"><a href="./index.html" class="nav-overlay__link nav-overlay__link--active">Contact us</a></li>
             <li role="none"><a href="#" class="nav-overlay__link">Design</a></li>
         </ul>
     </div>
 
     <main>
-        <section class="map-section" aria-label="Find where the animals live">
-            <div class="container map-section__container">
-                <h1 class="section-title map-section__title">Find where are the animals live</h1>
-                <div class="map-section__map">
-                    <img class="map-section__image" src="../../assets/images/Map.svg" alt="World map showing locations of Online Zoo animals" width="1406" height="912" loading="lazy">
+        <section class="contact-hero" aria-label="Online Zoo contact hero">
+            <img src="../../assets/images/Touch the animal 1.jpg" alt="Person interacting with an animal on a tablet screen" width="1400" height="815" loading="lazy">
+        </section>
 
-                    <!-- West End Bald Eagles (North America, west coast) -->
-                    <button class="map-pin map-pin--eagles" type="button" aria-label="West End Bald Eagles in North America">
-                        <img src="../../assets/icons/animal-location-eagles.svg" alt="" width="80" height="80" loading="lazy">
-                    </button>
-
-                    <!-- Chinese Alligator (China) -->
-                    <button class="map-pin map-pin--alligator" type="button" aria-label="Chinese Alligator in China">
-                        <img src="../../assets/icons/animal-location-alligator.svg" alt="" width="80" height="80" loading="lazy">
-                    </button>
-
-                    <!-- Gorilla in Congo (Central Africa) -->
-                    <button class="map-pin map-pin--gorilla" type="button" aria-label="Gorilla in Congo in Central Africa">
-                        <img src="../../assets/icons/animal-location-gorilla.svg" alt="" width="80" height="80" loading="lazy">
-                    </button>
-
-                    <!-- African Lion (East Africa) -->
-                    <button class="map-pin map-pin--lion" type="button" aria-label="African Lion in East Africa">
-                        <img src="../../assets/icons/animal-location-lion.svg" alt="" width="80" height="80" loading="lazy">
-                    </button>
-
-                    <!-- Madagascarian Lemur (Madagascar) -->
-                    <button class="map-pin map-pin--lemur" type="button" aria-label="Madagascarian Lemur in Madagascar">
-                        <img src="../../assets/icons/animal-location-lemur.svg" alt="" width="80" height="80" loading="lazy">
-                    </button>
-
-                    <!-- Sumatran Tiger (Indonesia) -->
-                    <button class="map-pin map-pin--tiger" type="button" aria-label="Sumatran Tiger in Indonesia">
-                        <img src="../../assets/icons/animal-location-tiger.svg" alt="" width="80" height="80" loading="lazy">
-                    </button>
-
-                    <!-- Giant Panda (China / East Asia) -->
-                    <button class="map-pin map-pin--panda" type="button" aria-label="Giant Panda in China">
-                        <img src="../../assets/icons/animal-location-panda.svg" alt="" width="80" height="80" loading="lazy">
-                    </button>
-
-                    <!-- Australian Koala (Australia) -->
-                    <button class="map-pin map-pin--koala" type="button" aria-label="Australian Koala in Australia">
-                        <img src="../../assets/icons/animal-location-australian-koala.svg" alt="" width="80" height="80" loading="lazy">
-                    </button>
+        <section class="contact" aria-label="Get in touch">
+            <div class="container">
+                <div class="contact__inner">
+                    <div class="contact__text">
+                        <h1 class="contact__title">Get in touch</h1>
+                        <p class="contact__description">
+                            Whether you have a question, or would like to say hello, we're happy to hear from you.
+                            Please use the form to send us a message and we'll get back to you as soon as we can.
+                        </p>
+                    </div>
+                    <form class="contact__form" aria-label="Contact form">
+                        <div class="contact__field">
+                            <label class="contact__label" for="contact-name">
+                                <span class="contact__label-required">*</span>
+                                <span>Your Name</span>
+                            </label>
+                            <input id="contact-name" name="name" type="text" class="contact__input" placeholder="First and last name" aria-required="true">
+                        </div>
+                        <div class="contact__field">
+                            <label class="contact__label" for="contact-email">
+                                <span class="contact__label-required">*</span>
+                                <span>Your Email Address</span>
+                            </label>
+                            <input id="contact-email" name="email" type="email" class="contact__input" placeholder="Enter your email" aria-required="true">
+                        </div>
+                        <div class="contact__field">
+                            <label class="contact__label" for="contact-subject">
+                                <span class="contact__label-required">*</span>
+                                <span>Subject</span>
+                            </label>
+                            <input id="contact-subject" name="subject" type="text" class="contact__input" placeholder="Enter the subject" aria-required="true">
+                        </div>
+                        <div class="contact__field contact__field--message">
+                            <label class="contact__label" for="contact-message">
+                                <span class="contact__label-required">*</span>
+                                <span>Message</span>
+                            </label>
+                            <textarea id="contact-message" name="message" class="contact__textarea" placeholder="Enter your message" rows="5" aria-required="true"></textarea>
+                        </div>
+                        <button type="submit" class="contact__submit btn btn--primary" aria-label="Send message">
+                            <span>Send message</span>
+                            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -127,13 +133,13 @@
                 <nav class="footer__nav" aria-label="Footer navigation">
                     <ul class="footer__menu" role="menubar">
                         <li role="none"><a href="../landing/index.html" class="footer__link">About</a></li>
-                        <li role="none"><a href="./index.html" class="footer__link">Map</a></li>
+                        <li role="none"><a href="../map/index.html" class="footer__link">Map</a></li>
                         <li role="none"><a href="../zoos/panda/index.html" class="footer__link">Zoos</a></li>
-                        <li role="none"><a href="../contact/index.html" class="footer__link">Contact us</a></li>
+                        <li role="none"><a href="./index.html" class="footer__link">Contact us</a></li>
                         <li role="none"><a href="#" class="footer__link">Design</a></li>
                     </ul>
                 </nav>
-                <button class="footer__donate-btn" type="button">
+                <button class="footer__donate-btn" type="button" aria-label="Donate for volunteers">
                     <span>Donate for volunteers</span>
                     <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
@@ -141,11 +147,13 @@
                     </svg>
                 </button>
             </div>
-
+            <div class="footer__divider" aria-hidden="true"></div>
             <div class="footer__bottom">
-                <p class="footer__copyright">© 2021 DinaK</p>
-                <p class="footer__copyright">© Yem Digital</p>
-                <p class="footer__copyright">© RSSchool</p>
+                <div class="footer__copyright">
+                    <span>© 2021 DinaK</span>
+                    <span>© Yem Digital</span>
+                    <span>© RSSchool</span>
+                </div>
                 <div class="footer__social">
                     <a href="#" class="footer__social-link" aria-label="YouTube">
                         <img src="../../assets/icons/YouTube.svg" alt="" width="40" height="40" loading="lazy">

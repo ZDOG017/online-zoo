@@ -370,6 +370,37 @@
         });
     };
 
+    const initZoosSidebar = () => {
+        const sidebar = document.querySelector('.zoos-sidebar');
+        const toggleBtn = sidebar?.querySelector('.zoos-sidebar__more');
+        if (!sidebar || !toggleBtn) return;
+
+        const setState = (isCollapsed) => {
+            sidebar.classList.toggle('zoos-sidebar--collapsed', isCollapsed);
+            const expanded = !isCollapsed;
+            sidebar.setAttribute('aria-expanded', String(expanded));
+            toggleBtn.setAttribute('aria-expanded', String(expanded));
+            toggleBtn.setAttribute('aria-label', expanded ? 'Collapse side panel' : 'Expand side panel');
+        };
+
+        toggleBtn.addEventListener('click', () => {
+            const isCollapsed = sidebar.classList.toggle('zoos-sidebar--collapsed');
+            const expanded = !isCollapsed;
+            sidebar.setAttribute('aria-expanded', String(expanded));
+            toggleBtn.setAttribute('aria-expanded', String(expanded));
+            toggleBtn.setAttribute('aria-label', expanded ? 'Collapse side panel' : 'Expand side panel');
+        });
+
+        toggleBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleBtn.click();
+            }
+        });
+
+        setState(false);
+    };
+
     const init = () => {
         initCarePopup();
         initDonationForm();
@@ -377,6 +408,7 @@
         initTestimonialsSlider();
         initDonationBanner();
         initHamburger();
+        initZoosSidebar();
     };
 
     if (document.readyState === 'loading') {
