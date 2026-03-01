@@ -44,7 +44,7 @@
         </div>
     </header>
 
-    <div class="nav-overlay" id="nav-overlay" aria-hidden="true" aria-label="Mobile menu">
+    <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Mobile menu">
         <button class="nav-overlay__close" type="button" aria-label="Close menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -396,7 +396,7 @@
                     <div class="testimonials__slider" aria-roledescription="carousel">
                         <div class="testimonials__track">
                             <div class="testimonials__slide">
-                                <div class="testimonials__grid" aria-label="User testimonials">
+                                <div class="testimonials__grid" role="region" aria-label="User testimonials">
                         <article class="testimonial-card">
                             <div class="testimonial-card__icon" aria-hidden="true">
                                 <img src="../../assets/icons/citation-icon.svg" alt="" width="48" height="40" loading="lazy">
@@ -447,7 +447,7 @@
                                 </div>
                             </div>
                             <div class="testimonials__slide" aria-hidden="true">
-                                <div class="testimonials__grid" aria-label="User testimonials">
+                                <div class="testimonials__grid" role="region" aria-label="User testimonials">
                                     <article class="testimonial-card">
                                         <div class="testimonial-card__icon" aria-hidden="true">
                                             <img src="../../assets/icons/citation-icon.svg" alt="" width="48" height="40" loading="lazy">
@@ -548,7 +548,7 @@
                     </article>
                 </div>
 
-                <div class="choose-favourite__grid" aria-label="Other animals you can feed">
+                <div class="choose-favourite__grid" role="region" aria-label="Other animals you can feed">
                     <article class="donate-card" aria-label="Feed tiger">
                         <div class="donate-card__image">
                             <img src="../../assets/images/Feed%20tiger.jpg" alt="Sumatran tiger resting" width="559" height="373" loading="lazy">
@@ -619,7 +619,7 @@
         </section>
     </main>
 
-    <footer class="footer" role="contentinfo">
+    <footer class="footer">
         <div class="container footer__container">
             <div class="footer__top">
                 <div class="footer__logos">
@@ -797,7 +797,7 @@
             </div>
 
             <footer class="donation-form__footer">
-                <div class="donation-form__steps" aria-label="Form progress">
+                <div class="donation-form__steps" role="group" aria-label="Form progress">
                     <span class="donation-form__step-dot" data-step="1" aria-current="step"></span>
                     <span class="donation-form__step-dot" data-step="2"></span>
                     <span class="donation-form__step-dot" data-step="3"></span>
