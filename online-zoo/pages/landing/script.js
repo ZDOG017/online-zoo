@@ -193,9 +193,65 @@
 
     document.addEventListener('keydown', handleKeyDown);
 
+    const initPetsSlider = () => {
+        const prevBtn = document.querySelector('.pets__arrow--prev');
+        const nextBtn = document.querySelector('.pets__arrow--next');
+        const track = document.querySelector('.pets__track');
+        const slide1 = document.querySelector('.pets__slide:not(.pets__slide--mirrored)');
+        const mirroredSlide = document.querySelector('.pets__slide--mirrored');
+        const row1 = document.querySelector('.pets__row[data-row="1"]');
+        const row2 = document.querySelector('.pets__row[data-row="2"]');
+        if (!prevBtn || !nextBtn || !track || !mirroredSlide || !row1 || !row2) return;
+
+        mirroredSlide.appendChild(row2.cloneNode(true));
+        mirroredSlide.appendChild(row1.cloneNode(true));
+
+        let currentSlide = 0;
+        const totalSlides = 2;
+
+        const updateSlider = () => {
+            track.style.transform = `translateX(-${currentSlide * 50}%)`;
+            mirroredSlide.setAttribute('aria-hidden', currentSlide === 0 ? 'true' : 'false');
+            if (slide1) slide1.setAttribute('aria-hidden', currentSlide === 1 ? 'true' : 'false');
+        };
+
+        const handlePrev = () => {
+            if (currentSlide > 0) {
+                currentSlide -= 1;
+                updateSlider();
+            }
+        };
+
+        const handleNext = () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide += 1;
+                updateSlider();
+            }
+        };
+
+        prevBtn.addEventListener('click', handlePrev);
+        nextBtn.addEventListener('click', handleNext);
+
+        prevBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handlePrev();
+            }
+        });
+        nextBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleNext();
+            }
+        });
+
+        updateSlider();
+    };
+
     const init = () => {
         initCarePopup();
         initDonationForm();
+        initPetsSlider();
     };
 
     if (document.readyState === 'loading') {

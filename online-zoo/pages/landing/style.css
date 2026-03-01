@@ -382,16 +382,32 @@ body {
 }
 
 .pets__slider {
+    overflow: hidden;
+    margin-bottom: 125px;
+    width: 100%;
+}
+
+.pets__track {
+    display: flex;
+    flex-direction: row;
+    width: 200%;
+    transition: transform 0.4s ease;
+}
+
+.pets__slide {
+    flex: 0 0 50%;
+    min-width: 50%;
     display: flex;
     flex-direction: column;
     gap: 40px;
-    margin-bottom: 125px;
+    box-sizing: border-box;
 }
 
 .pets__row {
     display: flex;
     gap: 40px;
     padding-left: calc((100vw - 1400px) / 2);
+    flex-shrink: 0;
 }
 
 .pet-card {
@@ -695,7 +711,6 @@ body {
     color: var(--color-white);
 }
 
-/* Button top at 1552px when section height is 1776px (100px padding + 1452px = 1552px) */
 .testimonials__feedback-btn {
     display: inline-flex;
     align-items: center;

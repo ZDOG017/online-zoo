@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Zoo</title>
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
@@ -125,8 +126,10 @@
                     </button>
                 </div>
             </div>
-            <div class="pets__slider">
-                <div class="pets__row">
+            <div class="pets__slider" aria-roledescription="carousel">
+                <div class="pets__track">
+                <div class="pets__slide">
+                <div class="pets__row" data-row="1">
                     <article class="pet-card" aria-label="Lucas the Giant Panda">
                         <div class="pet-card__image">
                             <img src="../../assets/images/1Panda.jpg" alt="Giant Panda eating bamboo" width="478" height="436" loading="lazy">
@@ -195,7 +198,7 @@
                         </a>
                     </article>
                 </div>
-                <div class="pets__row">
+                <div class="pets__row" data-row="2">
                     <article class="pet-card" aria-label="Sam and Lora the West End Bald Eagles">
                         <div class="pet-card__image">
                             <img src="../../assets/images/5West%20End%20Bald%20Eagles.jpg" alt="West End Bald Eagles perched in a tree" width="467" height="436" loading="lazy">
@@ -260,6 +263,10 @@
                             </svg>
                         </a>
                     </article>
+                </div>
+                </div>
+                <div class="pets__slide pets__slide--mirrored" aria-hidden="true">
+                </div>
                 </div>
             </div>
             <div class="container">
