@@ -2995,10 +2995,8 @@ body {
 }
 
 .zoos-sidebar {
-    position: fixed;
-    left: 0;
+    position: sticky;
     top: 110px;
-    bottom: 0;
     width: 220px;
     background-color: var(--color-dark);
     z-index: 10;
@@ -3292,6 +3290,10 @@ body {
 
 .zoos-cams__card:hover {
     opacity: 0.95;
+}
+
+.zoos-cams__card--active {
+    box-shadow: 0 0 0 3px var(--color-accent);
 }
 
 .zoos-cams__card-image {

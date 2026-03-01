@@ -370,6 +370,29 @@
         });
     };
 
+    const initPetCardLinks = () => {
+        const cards = document.querySelectorAll('.pet-card[data-link]');
+        cards.forEach((card) => {
+            const url = card.getAttribute('data-link');
+            if (!url) return;
+
+            const handleNavigate = () => {
+                window.location.href = url;
+            };
+
+            card.addEventListener('click', handleNavigate);
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleNavigate();
+                }
+            });
+
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'link');
+        });
+    };
+
     const initZoosSidebar = () => {
         const sidebar = document.querySelector('.zoos-sidebar');
         const toggleBtn = sidebar?.querySelector('.zoos-sidebar__more');
@@ -409,6 +432,7 @@
         initDonationBanner();
         initHamburger();
         initZoosSidebar();
+        initPetCardLinks();
     };
 
     if (document.readyState === 'loading') {
