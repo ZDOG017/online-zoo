@@ -395,33 +395,35 @@
 
     const initZoosSidebar = () => {
         const sidebar = document.querySelector('.zoos-sidebar');
-        const toggleBtn = sidebar?.querySelector('.zoos-sidebar__more');
-        if (!sidebar || !toggleBtn) return;
+        if (!sidebar) return;
 
-        const setState = (isCollapsed) => {
-            sidebar.classList.toggle('zoos-sidebar--collapsed', isCollapsed);
-            const expanded = !isCollapsed;
-            sidebar.setAttribute('aria-expanded', String(expanded));
-            toggleBtn.setAttribute('aria-expanded', String(expanded));
-            toggleBtn.setAttribute('aria-label', expanded ? 'Collapse side panel' : 'Expand side panel');
+        const collapseBtn = sidebar.querySelector('.zoos-sidebar__collapse');
+
+        const toggle = () => {
+            const isOpen = sidebar.classList.toggle('open');
+            if (collapseBtn) collapseBtn.textContent = isOpen ? '\u00AB' : '\u00BB';
         };
 
-        toggleBtn.addEventListener('click', () => {
-            const isCollapsed = sidebar.classList.toggle('zoos-sidebar--collapsed');
-            const expanded = !isCollapsed;
-            sidebar.setAttribute('aria-expanded', String(expanded));
-            toggleBtn.setAttribute('aria-expanded', String(expanded));
-            toggleBtn.setAttribute('aria-label', expanded ? 'Collapse side panel' : 'Expand side panel');
+        sidebar.addEventListener('click', (e) => {
+            if (sidebar.classList.contains('open')) return;
+            e.preventDefault();
+            toggle();
         });
 
-        toggleBtn.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleBtn.click();
-            }
-        });
+        if (collapseBtn) {
+            collapseBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggle();
+            });
 
-        setState(false);
+            collapseBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggle();
+                }
+            });
+        }
     };
 
     const init = () => {
