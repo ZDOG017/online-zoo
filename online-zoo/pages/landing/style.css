@@ -927,6 +927,30 @@ body {
     background-color: transparent;
 }
 
+@media (max-width: 1600px) and (min-width: 1201px) {
+    .testimonials__container {
+        max-width: 1400px;
+        padding-left: 40px;
+        padding-right: 40px;
+        margin: 0 auto;
+    }
+
+    .testimonials__inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        max-width: 100%;
+    }
+
+    .testimonials__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+    }
+
+    .testimonial-card {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
 .choose-favourite {
     padding-top: 136px;
     padding-bottom: 150px;
