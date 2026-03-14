@@ -8,3 +8,6 @@
 online-zoo-layout.md
 online-zoo.md
 api-spec.json
+node_modules/
+dist/
+npm-debug.log*

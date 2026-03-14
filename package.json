@@ -1,0 +1,33 @@
+{
+  "name": "online-zoo",
+  "version": "1.0.0",
+  "description": "Online Zoo multi-page project",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZDOG017/online-zoo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZDOG017/online-zoo/issues"
+  },
+  "homepage": "https://github.com/ZDOG017/online-zoo#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
+    "eslint": "^10.0.3",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.0"
+  }
+}
