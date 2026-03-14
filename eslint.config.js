@@ -12,7 +12,13 @@ export default [
         project: "./tsconfig.json"
       },
       globals: {
+        AbortSignal: "readonly",
         document: "readonly",
+        fetch: "readonly",
+        HeadersInit: "readonly",
+        RequestInit: "readonly",
+        Response: "readonly",
+        URL: "readonly",
         window: "readonly",
         Node: "readonly"
       }
