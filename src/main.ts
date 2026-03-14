@@ -1,1 +1,1 @@
-import "../online-zoo/pages/landing/script.js";
+import "./landing/script";

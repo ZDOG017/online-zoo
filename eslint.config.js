@@ -10,6 +10,11 @@ export default [
       parser: tsParser,
       parserOptions: {
         project: "./tsconfig.json"
+      },
+      globals: {
+        document: "readonly",
+        window: "readonly",
+        Node: "readonly"
       }
     },
     plugins: {
