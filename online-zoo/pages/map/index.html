@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Zoo – Map</title>
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../landing/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav" aria-label="Main navigation">
+                <a href="../landing/index.html" class="nav__logo" aria-label="Online Zoo home">
+                    <img src="../../assets/icons/Logo.svg" alt="Online Zoo" width="96" height="50">
+                </a>
+                <button class="nav__hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                </button>
+                <ul class="nav__menu" id="nav-menu" role="menubar">
+                    <li role="none"><a href="../landing/index.html" class="nav__link">About</a></li>
+                    <li role="none"><a href="./index.html" class="nav__link nav__link--active">Map</a></li>
+                    <li role="none"><a href="../zoos/panda/index.html" class="nav__link">Zoos</a></li>
+                    <li role="none"><a href="../contact/index.html" class="nav__link">Contact us</a></li>
+                    <li role="none"><a href="#" class="nav__link">Design</a></li>
+                </ul>
+                <div class="nav__social">
+                    <a href="#" class="nav__social-link" aria-label="YouTube">
+                        <img src="../../assets/icons/YouTube.svg" alt="youtube" width="40" height="40">
+                    </a>
+                    <a href="#" class="nav__social-link" aria-label="Instagram">
+                        <img src="../../assets/icons/Instagram.svg" alt="instagram" width="40" height="40">
+                    </a>
+                    <a href="#" class="nav__social-link" aria-label="Facebook">
+                        <img src="../../assets/icons/Facebook.svg" alt="facebook" width="40" height="40">
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Mobile menu">
+        <button class="nav-overlay__close" type="button" aria-label="Close menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <ul class="nav-overlay__menu" role="menubar">
+            <li role="none"><a href="../landing/index.html" class="nav-overlay__link">About</a></li>
+            <li role="none"><a href="./index.html" class="nav-overlay__link nav-overlay__link--active">Map</a></li>
+            <li role="none"><a href="../zoos/panda/index.html" class="nav-overlay__link">Zoos</a></li>
+            <li role="none"><a href="../contact/index.html" class="nav-overlay__link">Contact us</a></li>
+            <li role="none"><a href="#" class="nav-overlay__link">Design</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section class="map-section" aria-label="Find where the animals live">
+            <div class="container map-section__container">
+                <h1 class="section-title map-section__title">Find where are the animals live</h1>
+                <div class="map-section__map">
+                    <img class="map-section__image" src="../../assets/images/Map.svg" alt="World map showing locations of Online Zoo animals" width="1406" height="912" loading="lazy">
+
+                    <!-- West End Bald Eagles (North America, west coast) -->
+                    <button class="map-pin map-pin--eagles" type="button" aria-label="West End Bald Eagles in North America">
+                        <img src="../../assets/icons/animal-location-eagles.svg" alt="" width="80" height="80" loading="lazy">
+                    </button>
+
+                    <!-- Chinese Alligator (China) -->
+                    <button class="map-pin map-pin--alligator" type="button" aria-label="Chinese Alligator in China">
+                        <img src="../../assets/icons/animal-location-alligator.svg" alt="" width="80" height="80" loading="lazy">
+                    </button>
+
+                    <!-- Gorilla in Congo (Central Africa) -->
+                    <button class="map-pin map-pin--gorilla" type="button" aria-label="Gorilla in Congo in Central Africa">
+                        <img src="../../assets/icons/animal-location-gorilla.svg" alt="" width="80" height="80" loading="lazy">
+                    </button>
+
+                    <!-- African Lion (East Africa) -->
+                    <button class="map-pin map-pin--lion" type="button" aria-label="African Lion in East Africa">
+                        <img src="../../assets/icons/animal-location-lion.svg" alt="" width="80" height="80" loading="lazy">
+                    </button>
+
+                    <!-- Madagascarian Lemur (Madagascar) -->
+                    <button class="map-pin map-pin--lemur" type="button" aria-label="Madagascarian Lemur in Madagascar">
+                        <img src="../../assets/icons/animal-location-lemur.svg" alt="" width="80" height="80" loading="lazy">
+                    </button>
+
+                    <!-- Sumatran Tiger (Indonesia) -->
+                    <button class="map-pin map-pin--tiger" type="button" aria-label="Sumatran Tiger in Indonesia">
+                        <img src="../../assets/icons/animal-location-tiger.svg" alt="" width="80" height="80" loading="lazy">
+                    </button>
+
+                    <!-- Giant Panda (China / East Asia) -->
+                    <button class="map-pin map-pin--panda" type="button" aria-label="Giant Panda in China">
+                        <img src="../../assets/icons/animal-location-panda.svg" alt="" width="80" height="80" loading="lazy">
+                    </button>
+
+                    <!-- Australian Koala (Australia) -->
+                    <button class="map-pin map-pin--koala" type="button" aria-label="Australian Koala in Australia">
+                        <img src="../../assets/icons/animal-location-australian-koala.svg" alt="" width="80" height="80" loading="lazy">
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__top">
+                <div class="footer__logos">
+                    <a href="../landing/index.html" class="footer__logo" aria-label="Online Zoo home">
+                        <img src="../../assets/icons/Logo_footer.svg" alt="Online Zoo" width="96" height="50" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__logo footer__logo--yem" aria-label="Yem Digital">
+                        <img src="../../assets/icons/Yem%20Digital.svg" alt="Yem Digital" width="50" height="50" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__logo footer__logo--rss" aria-label="RS School">
+                        <img src="../../assets/icons/rs_school_js%20logo.svg" alt="RS School" width="138" height="51" loading="lazy">
+                    </a>
+                </div>
+                <nav class="footer__nav" aria-label="Footer navigation">
+                    <ul class="footer__menu" role="menubar">
+                        <li role="none"><a href="../landing/index.html" class="footer__link">About</a></li>
+                        <li role="none"><a href="./index.html" class="footer__link">Map</a></li>
+                        <li role="none"><a href="../zoos/panda/index.html" class="footer__link">Zoos</a></li>
+                        <li role="none"><a href="../contact/index.html" class="footer__link">Contact us</a></li>
+                        <li role="none"><a href="#" class="footer__link">Design</a></li>
+                    </ul>
+                </nav>
+                <button class="footer__donate-btn" type="button">
+                    <span>Donate for volunteers</span>
+                    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="footer__bottom">
+                <p class="footer__copyright">© 2021 DinaK</p>
+                <p class="footer__copyright">© Yem Digital</p>
+                <p class="footer__copyright">© RSSchool</p>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link" aria-label="YouTube">
+                        <img src="../../assets/icons/YouTube.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="Instagram">
+                        <img src="../../assets/icons/Instagram.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="Facebook">
+                        <img src="../../assets/icons/Facebook.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../landing/script.js"></script>
+</body>
+</html>
+

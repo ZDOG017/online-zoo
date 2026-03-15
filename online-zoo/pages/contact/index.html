@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Zoo – Contact us</title>
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../landing/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav" aria-label="Main navigation">
+                <a href="../landing/index.html" class="nav__logo" aria-label="Online Zoo home">
+                    <img src="../../assets/icons/Logo.svg" alt="Online Zoo" width="96" height="50">
+                </a>
+                <button class="nav__hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                </button>
+                <ul class="nav__menu" id="nav-menu" role="menubar">
+                    <li role="none"><a href="../landing/index.html" class="nav__link">About</a></li>
+                    <li role="none"><a href="../map/index.html" class="nav__link">Map</a></li>
+                    <li role="none"><a href="../zoos/panda/index.html" class="nav__link">Zoos</a></li>
+                    <li role="none"><a href="./index.html" class="nav__link nav__link--active">Contact us</a></li>
+                    <li role="none"><a href="#" class="nav__link">Design</a></li>
+                </ul>
+                <div class="nav__social">
+                    <a href="#" class="nav__social-link" aria-label="YouTube">
+                        <img src="../../assets/icons/YouTube.svg" alt="youtube" width="40" height="40">
+                    </a>
+                    <a href="#" class="nav__social-link" aria-label="Instagram">
+                        <img src="../../assets/icons/Instagram.svg" alt="instagram" width="40" height="40">
+                    </a>
+                    <a href="#" class="nav__social-link" aria-label="Facebook">
+                        <img src="../../assets/icons/Facebook.svg" alt="facebook" width="40" height="40">
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Mobile menu">
+        <button class="nav-overlay__close" type="button" aria-label="Close menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <ul class="nav-overlay__menu" role="menubar">
+            <li role="none"><a href="../landing/index.html" class="nav-overlay__link">About</a></li>
+            <li role="none"><a href="../map/index.html" class="nav-overlay__link">Map</a></li>
+            <li role="none"><a href="../zoos/panda/index.html" class="nav-overlay__link">Zoos</a></li>
+            <li role="none"><a href="./index.html" class="nav-overlay__link nav-overlay__link--active">Contact us</a></li>
+            <li role="none"><a href="#" class="nav-overlay__link">Design</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section class="contact-hero" aria-label="Online Zoo contact hero">
+            <img src="../../assets/images/Touch%20the%20animal2%201.jpg" alt="Person interacting with an animal on a tablet screen" width="1400" height="815" loading="lazy">
+        </section>
+
+        <section class="contact" aria-label="Get in touch">
+            <div class="container">
+                <div class="contact__inner">
+                    <div class="contact__text">
+                        <h1 class="contact__title">Get in touch</h1>
+                        <p class="contact__description">
+                            Whether you have a question, or would like to say hello, we're happy to hear from you.
+                            Please use the form to send us a message and we'll get back to you as soon as we can.
+                        </p>
+                    </div>
+                    <form class="contact__form" aria-label="Contact form">
+                        <div class="contact__field">
+                            <label class="contact__label" for="contact-name">
+                                <span class="contact__label-required">*</span>
+                                <span>Your Name</span>
+                            </label>
+                            <input id="contact-name" name="name" type="text" class="contact__input" placeholder="First and last name" aria-required="true" required>
+                        </div>
+                        <div class="contact__field">
+                            <label class="contact__label" for="contact-email">
+                                <span class="contact__label-required">*</span>
+                                <span>Your Email Address</span>
+                            </label>
+                            <input id="contact-email" name="email" type="email" class="contact__input" placeholder="Enter your email" aria-required="true" required>
+                        </div>
+                        <div class="contact__field">
+                            <label class="contact__label" for="contact-subject">
+                                <span class="contact__label-required">*</span>
+                                <span>Subject</span>
+                            </label>
+                            <input id="contact-subject" name="subject" type="text" class="contact__input" placeholder="Enter the subject" aria-required="true" required>
+                        </div>
+                        <div class="contact__field contact__field--message">
+                            <label class="contact__label" for="contact-message">
+                                <span class="contact__label-required">*</span>
+                                <span>Message</span>
+                            </label>
+                            <textarea id="contact-message" name="message" class="contact__textarea" placeholder="Enter your message" rows="5" aria-required="true" required></textarea>
+                        </div>
+                        <button type="submit" class="contact__submit btn btn--primary" aria-label="Send message">
+                            <span>Send message</span>
+                            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__top">
+                <div class="footer__logos">
+                    <a href="../landing/index.html" class="footer__logo" aria-label="Online Zoo home">
+                        <img src="../../assets/icons/Logo_footer.svg" alt="Online Zoo" width="96" height="50" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__logo footer__logo--yem" aria-label="Yem Digital">
+                        <img src="../../assets/icons/Yem%20Digital.svg" alt="Yem Digital" width="50" height="50" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__logo footer__logo--rss" aria-label="RS School">
+                        <img src="../../assets/icons/rs_school_js%20logo.svg" alt="RS School" width="138" height="51" loading="lazy">
+                    </a>
+                </div>
+                <nav class="footer__nav" aria-label="Footer navigation">
+                    <ul class="footer__menu" role="menubar">
+                        <li role="none"><a href="../landing/index.html" class="footer__link">About</a></li>
+                        <li role="none"><a href="../map/index.html" class="footer__link">Map</a></li>
+                        <li role="none"><a href="../zoos/panda/index.html" class="footer__link">Zoos</a></li>
+                        <li role="none"><a href="./index.html" class="footer__link">Contact us</a></li>
+                        <li role="none"><a href="#" class="footer__link">Design</a></li>
+                    </ul>
+                </nav>
+                <button class="footer__donate-btn" type="button" aria-label="Donate for volunteers">
+                    <span>Donate for volunteers</span>
+                    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="footer__divider" aria-hidden="true"></div>
+            <div class="footer__bottom">
+                <div class="footer__copyright">
+                    <span>© 2021 DinaK</span>
+                    <span>© Yem Digital</span>
+                    <span>© RSSchool</span>
+                </div>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link" aria-label="YouTube">
+                        <img src="../../assets/icons/YouTube.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="Instagram">
+                        <img src="../../assets/icons/Instagram.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="Facebook">
+                        <img src="../../assets/icons/Facebook.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../landing/script.js"></script>
+</body>
+</html>
+
