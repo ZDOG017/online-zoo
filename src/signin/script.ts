@@ -122,12 +122,16 @@ const extractToken = (response: AuthResponse): string | null => {
   if (isRecord(response) && typeof response.accessToken === "string" && response.accessToken.length > 0) {
     return response.accessToken;
   }
+  if (isRecord(response.data) && typeof response.data.access_token === "string" && response.data.access_token.length > 0) {
+    return response.data.access_token;
+  }
   return null;
 };
 
 const extractUserFromResponse = (response: AuthResponse): AuthUser | null => {
   if (isAuthUser(response.user)) return response.user;
   if (isRecord(response) && isAuthUser(response.user)) return response.user;
+  if (isRecord(response.data) && isAuthUser(response.data.user)) return response.data.user;
   return null;
 };
 
