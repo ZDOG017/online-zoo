@@ -184,6 +184,46 @@ const renderError = (): void => {
   if (infoParagraph) {
     infoParagraph.textContent = DETAIL_ERROR_TEXT;
   }
+
+  const infoRows = document.querySelectorAll<HTMLElement>(".zoos-info__row dd");
+  infoRows.forEach((row) => {
+    row.textContent = DETAIL_ERROR_TEXT;
+  });
+
+  const mapButton = document.querySelector<HTMLElement>(".zoos-info__map-btn");
+  if (mapButton) {
+    mapButton.setAttribute("aria-disabled", "true");
+    mapButton.classList.add("zoos-info__map-btn--disabled");
+  }
+  activeCoordinates = null;
+};
+
+const renderPendingDetails = (): void => {
+  const pendingText = "Loading...";
+
+  const camsTitle = document.querySelector<HTMLElement>(".zoos-cams__title");
+  if (camsTitle) camsTitle.textContent = pendingText;
+
+  const camsPlayerLabel = document.querySelector<HTMLElement>(".zoos-cams__player-label");
+  if (camsPlayerLabel) camsPlayerLabel.textContent = pendingText;
+
+  const didYouKnowText = document.querySelector<HTMLElement>(".zoos-did-you-know__text");
+  if (didYouKnowText) didYouKnowText.textContent = pendingText;
+
+  const infoParagraph = document.querySelector<HTMLElement>(".zoos-info__paragraph");
+  if (infoParagraph) infoParagraph.textContent = pendingText;
+
+  const infoRows = document.querySelectorAll<HTMLElement>(".zoos-info__row dd");
+  infoRows.forEach((row) => {
+    row.textContent = pendingText;
+  });
+
+  const mapButton = document.querySelector<HTMLElement>(".zoos-info__map-btn");
+  if (mapButton) {
+    mapButton.setAttribute("aria-disabled", "true");
+    mapButton.classList.add("zoos-info__map-btn--disabled");
+  }
+  activeCoordinates = null;
 };
 
 const isValidPetDetails = (pet: unknown): pet is PetDetails => {
@@ -292,6 +332,7 @@ const updateCamVisuals = (pet: PetDetails): void => {
 const fetchAndRenderPet = async (petId: number): Promise<void> => {
   requestKey += 1;
   const currentRequestKey = requestKey;
+  renderPendingDetails();
   showOverlay();
 
   try {
