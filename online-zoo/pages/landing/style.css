@@ -3010,12 +3010,38 @@ body {
     }
 }
 
+@media (max-width: 320px) {
+    .footer__logos {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .footer__copyright {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .footer__bottom {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer__donate-btn {
+        min-width: unset;
+        width: 100%;
+    }
+}
+
 /* =======================
    Zoos page (Panda)
    ======================= */
 
 .zoos-page {
     padding-left: 0;
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 /* === Sidebar base (collapsed by default) === */
@@ -3152,6 +3178,14 @@ body {
     margin-left: 220px;
     padding-top: 54px;
     padding-bottom: 120px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    max-width: calc(100vw - 220px);
+}
+
+.zoos-main img {
+    max-width: 100%;
+    height: auto;
 }
 
 .zoos-cams__header {
@@ -3502,21 +3536,47 @@ body {
 
 @media (max-width: 1200px) {
     .zoos-sidebar {
-        width: 160px;
+        width: 115px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__badge span {
+        display: none;
+    }
+
+    .zoos-sidebar .zoos-sidebar__badge {
+        padding: 6px 10px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__box img {
+        width: 55px;
+        height: 55px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__box {
+        padding: 12px 8px;
     }
 
     .zoos-sidebar.open {
-        width: 260px;
+        width: 300px;
+    }
+
+    .zoos-sidebar.open .zoos-sidebar__badge span {
+        display: inline;
+    }
+
+    .zoos-sidebar.open .zoos-sidebar__badge {
+        padding: 8px 16px;
     }
 
     .zoos-main {
-        margin-left: 160px;
+        margin-left: 115px;
+        max-width: calc(100vw - 115px);
         padding-top: 40px;
     }
 
     .zoos-donate.donation-banner {
-        margin-left: -160px;
-        padding-left: 160px;
+        margin-left: -115px;
+        padding-left: 115px;
     }
 
     .zoos-cams__title {
@@ -3543,18 +3603,105 @@ body {
 
 @media (max-width: 640px) {
     .zoos-sidebar {
+        width: 70px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__top {
+        flex-direction: column;
+        gap: 4px;
+        padding: 4px 0;
+    }
+
+    .zoos-sidebar .zoos-sidebar__badge {
+        padding: 4px 8px;
+        font-size: 0;
+        gap: 0;
+    }
+
+    .zoos-sidebar .zoos-sidebar__badge svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__badge span {
         display: none;
     }
 
+    .zoos-sidebar .zoos-sidebar__collapse {
+        font-size: 16px;
+        padding: 2px 8px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__box img {
+        width: 30px;
+        height: 30px;
+        padding: 4px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__box {
+        padding: 10px 5px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__arrow-down {
+        font-size: 20px;
+        padding: 6px;
+    }
+
+    .zoos-sidebar.open {
+        width: 200px;
+    }
+
+    .zoos-sidebar.open .zoos-sidebar__top {
+        flex-direction: row;
+    }
+
+    .zoos-sidebar.open .zoos-sidebar__badge {
+        font-size: 14px;
+        gap: 6px;
+    }
+
+    .zoos-sidebar.open .zoos-sidebar__badge span {
+        display: inline;
+    }
+
+    .zoos-sidebar.open .zoos-sidebar__collapse {
+        font-size: 20px;
+    }
+
+    .zoos-sidebar.open .zoos-sidebar__box img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .zoos-sidebar.open .zoos-sidebar__label {
+        font-size: 11px;
+        line-height: 1.3;
+    }
+
     .zoos-main {
-        margin-left: 0;
+        margin-left: 70px;
+        max-width: calc(100vw - 70px);
         padding-top: 30px;
         padding-bottom: 60px;
     }
 
     .zoos-donate.donation-banner {
-        margin-left: 0;
-        padding-left: 0;
+        margin-left: -70px;
+        padding-left: 70px;
+        padding-right: 20px;
+    }
+
+    .zoos-donate .donation-banner__inner {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .zoos-donate__title {
+        font-size: 28px;
+    }
+
+    .zoos-donate__description {
+        max-width: 100%;
     }
 
     .zoos-cams__header {
@@ -3563,7 +3710,11 @@ body {
     }
 
     .zoos-cams__title {
-        font-size: 36px;
+        font-size: 28px;
+    }
+
+    .zoos-cams__more-title {
+        font-size: 24px;
     }
 
     .zoos-cams__carousel-wrap {
@@ -3571,8 +3722,7 @@ body {
     }
 
     .zoos-cams__arrow {
-        width: 50px;
-        height: 50px;
+        display: none;
     }
 
     .zoos-cams__carousel-track {
@@ -3582,12 +3732,16 @@ body {
     }
 
     .zoos-cams__card {
-        flex: 0 0 280px;
-        min-width: 280px;
+        flex: 0 0 220px;
+        min-width: 220px;
     }
 
     .zoos-cams__card-image {
-        height: 180px;
+        height: 160px;
+    }
+
+    .zoos-cams__player-wrap {
+        max-width: 100%;
     }
 
     .zoos-did-you-know__card {
@@ -3595,12 +3749,12 @@ body {
     }
 
     .zoos-did-you-know__title {
-        font-size: 36px;
+        font-size: 28px;
         margin-bottom: 24px;
     }
 
     .zoos-did-you-know__text {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .zoos-info__grid {
@@ -3616,6 +3770,114 @@ body {
 
     .zoos-info__image {
         height: 280px;
+    }
+
+    .zoos-info__paragraph {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 320px) {
+    .zoos-sidebar {
+        width: 45px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__badge {
+        padding: 3px 6px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__badge svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__collapse {
+        font-size: 14px;
+        padding: 2px 4px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__box img {
+        width: 20px;
+        height: 20px;
+        padding: 3px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__box {
+        padding: 8px 4px;
+    }
+
+    .zoos-sidebar .zoos-sidebar__arrow-down {
+        font-size: 16px;
+        padding: 4px;
+    }
+
+    .zoos-sidebar.open {
+        width: 230px;
+    }
+
+    .zoos-main {
+        margin-left: 45px;
+        max-width: calc(100vw - 45px);
+    }
+
+    .zoos-donate.donation-banner {
+        margin-left: -45px;
+        padding-left: 45px;
+        padding-right: 10px;
+    }
+
+    .zoos-donate__title {
+        font-size: 22px;
+    }
+
+    .zoos-donate__description {
+        font-size: 14px;
+    }
+
+    .zoos-cams__title {
+        font-size: 20px;
+        letter-spacing: 0.05em;
+    }
+
+    .zoos-cams__more-title {
+        font-size: 18px;
+    }
+
+    .zoos-cams__card {
+        flex: 0 0 150px;
+        min-width: 150px;
+    }
+
+    .zoos-cams__card-image {
+        height: 110px;
+    }
+
+    .zoos-did-you-know {
+        padding: 40px 0;
+    }
+
+    .zoos-did-you-know__card {
+        padding: 20px 15px 30px;
+    }
+
+    .zoos-did-you-know__title {
+        font-size: 22px;
+    }
+
+    .zoos-did-you-know__text {
+        font-size: 14px;
+    }
+
+    .zoos-info {
+        padding: 40px 0;
+    }
+
+    .zoos-info__paragraph {
+        font-size: 14px;
+    }
+
+    .zoos-info__image {
+        height: 200px;
     }
 }
 
