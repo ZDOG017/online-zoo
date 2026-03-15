@@ -118,6 +118,48 @@ const getPetName = (pet: PetDetails): string =>
 const getField = (value: unknown, fallback = "Unknown"): string =>
   typeof value === "string" && value.length > 0 ? value : fallback;
 
+const buildDidYouKnowSection = (text: string): HTMLElement => {
+  const section = document.createElement("section");
+  section.className = "zoos-did-you-know";
+  section.setAttribute("aria-label", "Did you know");
+  section.dataset.generated = "true";
+  section.innerHTML = `
+    <div class="container">
+      <div class="zoos-did-you-know__card">
+        <h2 class="zoos-did-you-know__title">Did You Know?</h2>
+        <p class="zoos-did-you-know__text">${text}</p>
+      </div>
+    </div>
+  `;
+  return section;
+};
+
+const ensureDidYouKnowSection = (): void => {
+  const main = document.querySelector<HTMLElement>(".zoos-main");
+  if (!main) return;
+
+  const existing = main.querySelector<HTMLElement>(".zoos-did-you-know");
+  if (existing?.dataset.generated === "true") return;
+
+  const currentText =
+    existing?.querySelector<HTMLElement>(".zoos-did-you-know__text")?.textContent?.trim() ??
+    "Loading...";
+  const generatedSection = buildDidYouKnowSection(currentText);
+
+  if (existing) {
+    existing.replaceWith(generatedSection);
+    return;
+  }
+
+  const infoSection = main.querySelector<HTMLElement>(".zoos-info");
+  if (infoSection) {
+    infoSection.insertAdjacentElement("beforebegin", generatedSection);
+    return;
+  }
+
+  main.append(generatedSection);
+};
+
 const getOverlay = (): HTMLElement | null => document.querySelector<HTMLElement>(".zoos-detail-overlay");
 
 const ensureDetailOverlay = (): void => {
@@ -517,6 +559,7 @@ const initPetSelectionListener = (): void => {
 
 const init = (): void => {
   if (!document.querySelector(".zoos-main")) return;
+  ensureDidYouKnowSection();
   ensureDetailOverlay();
   ensureMapModal();
   initMapModal();
