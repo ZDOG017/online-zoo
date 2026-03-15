@@ -3,11 +3,14 @@ import { dirname, resolve } from "node:path";
 import { defineConfig } from "vite";
 
 const currentDirectoryPath = dirname(fileURLToPath(import.meta.url));
+const repoName = "online-zoo";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: command === "build" ? `/${repoName}/` : "/",
   build: {
     rollupOptions: {
       input: {
+        root: resolve(currentDirectoryPath, "index.html"),
         landing: resolve(currentDirectoryPath, "online-zoo/pages/landing/index.html"),
         signin: resolve(currentDirectoryPath, "online-zoo/pages/signin/index.html"),
         register: resolve(currentDirectoryPath, "online-zoo/pages/register/index.html"),
@@ -20,4 +23,4 @@ export default defineConfig({
       }
     }
   }
-});
+}));
