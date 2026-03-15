@@ -165,10 +165,31 @@ const hideOverlay = (): void => {
 };
 
 const renderError = (): void => {
+  const camsTitle = document.querySelector<HTMLElement>(".zoos-cams__title");
+  if (camsTitle) {
+    camsTitle.textContent = DETAIL_ERROR_TEXT;
+  }
+
+  const camsPlayerLabel = document.querySelector<HTMLElement>(".zoos-cams__player-label");
+  if (camsPlayerLabel) {
+    camsPlayerLabel.textContent = DETAIL_ERROR_TEXT;
+  }
+
   const didYouKnowText = document.querySelector<HTMLElement>(".zoos-did-you-know__text");
   if (didYouKnowText) {
     didYouKnowText.textContent = DETAIL_ERROR_TEXT;
   }
+
+  const infoParagraph = document.querySelector<HTMLElement>(".zoos-info__paragraph");
+  if (infoParagraph) {
+    infoParagraph.textContent = DETAIL_ERROR_TEXT;
+  }
+};
+
+const isValidPetDetails = (pet: unknown): pet is PetDetails => {
+  if (!(typeof pet === "object" && pet !== null)) return false;
+  const maybePet = pet as Partial<PetDetails>;
+  return typeof maybePet.id === "number" && Number.isFinite(maybePet.id) && maybePet.id > 0;
 };
 
 const setInfoValue = (label: string, value: string): void => {
@@ -275,6 +296,9 @@ const fetchAndRenderPet = async (petId: number): Promise<void> => {
 
   try {
     const pet = await getPetById(petId);
+    if (!isValidPetDetails(pet)) {
+      throw new Error("Invalid pet details payload");
+    }
     if (currentRequestKey !== requestKey) return;
     updatePetDetails(pet);
     updateCamVisuals(pet);
