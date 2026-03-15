@@ -16,12 +16,29 @@ import {
   type RegistrationPayload,
 } from "./types";
 
-export const getPets = async (signal?: AbortSignal): Promise<ApiList<PetSummary>> =>
-  request<ApiList<PetSummary>>({
+const extractDataList = <TItem>(payload: unknown): ApiList<TItem> => {
+  if (Array.isArray(payload)) {
+    return payload as ApiList<TItem>;
+  }
+
+  if (typeof payload === "object" && payload !== null) {
+    const record = payload as Record<string, unknown>;
+    if (Array.isArray(record.data)) {
+      return record.data as ApiList<TItem>;
+    }
+  }
+
+  return [];
+};
+
+export const getPets = async (signal?: AbortSignal): Promise<ApiList<PetSummary>> => {
+  const payload = await request<unknown>({
     route: ApiRoute.PETS,
     method: HttpMethod.GET,
     signal,
   });
+  return extractDataList<PetSummary>(payload);
+};
 
 export const getPetById = async (
   petId: PetId,
@@ -33,19 +50,23 @@ export const getPetById = async (
     signal,
   });
 
-export const getFeedback = async (signal?: AbortSignal): Promise<ApiList<FeedbackItem>> =>
-  request<ApiList<FeedbackItem>>({
+export const getFeedback = async (signal?: AbortSignal): Promise<ApiList<FeedbackItem>> => {
+  const payload = await request<unknown>({
     route: ApiRoute.FEEDBACK,
     method: HttpMethod.GET,
     signal,
   });
+  return extractDataList<FeedbackItem>(payload);
+};
 
-export const getCameras = async (signal?: AbortSignal): Promise<ApiList<CameraItem>> =>
-  request<ApiList<CameraItem>>({
+export const getCameras = async (signal?: AbortSignal): Promise<ApiList<CameraItem>> => {
+  const payload = await request<unknown>({
     route: ApiRoute.CAMERAS,
     method: HttpMethod.GET,
     signal,
   });
+  return extractDataList<CameraItem>(payload);
+};
 
 export const registerUser = async (
   payload: RegistrationPayload,

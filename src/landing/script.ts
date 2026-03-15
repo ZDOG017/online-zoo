@@ -1,8 +1,94 @@
+import { getFeedback, getPets, type ApiList, type FeedbackItem, type PetSummary } from "../api";
+
 const POPUP_CARE_ID = "popup-care";
 const POPUP_FORM_ID = "popup-donation-form";
 const TOTAL_STEPS = 3;
 
 const activationKeys: ReadonlySet<string> = new Set(["Enter", " "]);
+const CITATION_ICON_SRC = "../../assets/icons/citation-icon.svg";
+const DEFAULT_PET_LINK = "../zoos/panda/index.html";
+
+interface PetVisualConfig {
+  imageSrc: string;
+  badge: string;
+  link: string;
+  imageAlt: string;
+  nameHint: string;
+}
+
+interface PetCardData {
+  name: string;
+  description: string;
+  imageSrc: string;
+  badge: string;
+  link: string;
+  imageAlt: string;
+}
+
+interface FeedbackCardData {
+  title: string;
+  text: string;
+  author: string;
+}
+
+const petVisualCatalog: ReadonlyArray<PetVisualConfig> = [
+  {
+    nameHint: "panda",
+    imageSrc: "../../assets/images/1Panda.jpg",
+    badge: "Lucas",
+    link: "../zoos/panda/index.html",
+    imageAlt: "Giant Panda eating bamboo",
+  },
+  {
+    nameHint: "lemur",
+    imageSrc: "../../assets/images/2Madagascarian Lemur.jpg",
+    badge: "Andy",
+    link: "../zoos/lemur/index.html",
+    imageAlt: "Madagascarian Lemur sitting on a branch",
+  },
+  {
+    nameHint: "gorilla",
+    imageSrc: "../../assets/images/3Gorilla in Congo.jpg",
+    badge: "Glen",
+    link: "../zoos/gorilla/index.html",
+    imageAlt: "Gorilla in its Congo habitat",
+  },
+  {
+    nameHint: "alligator",
+    imageSrc: "../../assets/images/4Alligator.jpg",
+    badge: "Mike",
+    link: "https://www.youtube.com/watch?v=chu7h09VIoU",
+    imageAlt: "Chinese Alligator basking",
+  },
+  {
+    nameHint: "eagle",
+    imageSrc: "../../assets/images/5West End Bald Eagles.jpg",
+    badge: "Sam & Lora",
+    link: "../zoos/eagles/index.html",
+    imageAlt: "West End Bald Eagles perched in a tree",
+  },
+  {
+    nameHint: "koala",
+    imageSrc: "../../assets/images/6Australian Koala.jpg",
+    badge: "Liz",
+    link: "https://www.youtube.com/watch?v=aRs5EN4epyE",
+    imageAlt: "Australian Koala in a eucalyptus tree",
+  },
+  {
+    nameHint: "tiger",
+    imageSrc: "../../assets/images/7Sumatran Tiger.jpg",
+    badge: "Senja",
+    link: "https://www.youtube.com/watch?v=rpS9vMij3yE",
+    imageAlt: "Sumatran Tiger in its habitat",
+  },
+  {
+    nameHint: "lion",
+    imageSrc: "../../assets/images/8African Lion.jpg",
+    badge: "Shake",
+    link: "https://www.youtube.com/watch?v=alWgeYnQd98",
+    imageAlt: "African Lion in the savanna",
+  },
+];
 
 const getPopup = (id: string): HTMLElement | null => document.getElementById(id);
 const getCareTriggers = (): NodeListOf<HTMLElement> =>
@@ -21,6 +107,218 @@ const parseStep = (value: string | undefined): number | null => {
   if (!value) return null;
   const parsed = Number.parseInt(value, 10);
   return Number.isNaN(parsed) ? null : parsed;
+};
+
+const getStringField = (source: unknown, keys: ReadonlyArray<string>): string | null => {
+  if (!(typeof source === "object" && source !== null)) return null;
+  const record = source as Record<string, unknown>;
+  for (const key of keys) {
+    const value = record[key];
+    if (typeof value === "string" && value.trim().length > 0) {
+      return value.trim();
+    }
+  }
+  return null;
+};
+
+const toChunks = <TValue>(items: ReadonlyArray<TValue>, size: number): TValue[][] => {
+  const chunks: TValue[][] = [];
+  for (let index = 0; index < items.length; index += size) {
+    chunks.push(items.slice(index, index + size));
+  }
+  return chunks;
+};
+
+const pickPetVisual = (name: string, index: number): PetVisualConfig => {
+  const loweredName = name.toLowerCase();
+  const byName = petVisualCatalog.find((item) => loweredName.includes(item.nameHint));
+  if (byName) return byName;
+  return petVisualCatalog[index % petVisualCatalog.length];
+};
+
+const toPetCards = (pets: ApiList<PetSummary>): PetCardData[] => {
+  const mapped = pets.map((pet, index) => {
+    const petName = getStringField(pet, ["commonName", "title", "name"]) ?? `Animal ${index + 1}`;
+    const badgeName = getStringField(pet, ["name"]) ?? pickPetVisual(petName, index).badge;
+    const description =
+      getStringField(pet, ["description", "about"]) ??
+      "Watch this amazing animal live and learn more about wildlife.";
+    const visual = pickPetVisual(petName, index);
+
+    return {
+      name: petName,
+      description,
+      imageSrc: visual.imageSrc,
+      badge: badgeName,
+      link: visual.link ?? DEFAULT_PET_LINK,
+      imageAlt: visual.imageAlt,
+    };
+  });
+
+  if (mapped.length > 0) return mapped;
+
+  return petVisualCatalog.map((visual) => ({
+    name: visual.nameHint.toUpperCase(),
+    description: "Watch this amazing animal live and learn more about wildlife.",
+    imageSrc: visual.imageSrc,
+    badge: visual.badge,
+    link: visual.link,
+    imageAlt: visual.imageAlt,
+  }));
+};
+
+const toFeedbackCards = (feedbackList: ApiList<FeedbackItem>): FeedbackCardData[] => {
+  return feedbackList.map((item, index) => ({
+    title: `${getStringField(item, ["city"]) ?? "Guest city"}, ${getStringField(item, ["month"]) ?? "Month"} ${getStringField(item, ["year"]) ?? ""}`.trim(),
+    text:
+      getStringField(item, ["text", "feedback", "message", "description"]) ??
+      "Thank you for helping us improve your Online Zoo experience.",
+    author: getStringField(item, ["name", "author", "user"]) ?? `Online Zoo visitor #${index + 1}`,
+  }));
+};
+
+const renderPetsTrack = (cards: ReadonlyArray<PetCardData>): string => {
+  const pages = toChunks(cards.slice(0, 16), 8);
+  const preparedPages = pages.length > 0 ? pages.slice(0, 2) : [cards.slice(0, 8)];
+  if (preparedPages.length === 1) {
+    preparedPages.push(preparedPages[0]);
+  }
+
+  const slideMarkup = preparedPages
+    .map((page) => {
+      const rows = toChunks(page, 4);
+      const firstRow = rows[0] ?? [];
+      const secondRow = rows[1] ?? [];
+
+      const renderRowCards = (rowCards: ReadonlyArray<PetCardData>): string =>
+        rowCards
+          .map(
+            (card) => `
+        <article class="pet-card" aria-label="${card.badge} the ${card.name}" data-link="${card.link}">
+          <div class="pet-card__image">
+            <img src="${card.imageSrc}" alt="${card.imageAlt}" width="478" height="436" loading="lazy">
+            <span class="pet-card__badge">${card.badge}</span>
+          </div>
+          <div class="pet-card__info">
+            <h3 class="pet-card__name">${card.name}</h3>
+            <p class="pet-card__description">${card.description}</p>
+          </div>
+          <a href="${card.link}" class="pet-card__link" aria-label="View live camera for ${card.badge} the ${card.name}" tabindex="0">
+            <span>View Live Cam</span>
+            <svg width="28" height="25" viewBox="0 0 28 25" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15.42 0L28 12.5L15.42 25H10.58L21.28 14.38H0V10.62H21.28L10.58 0H15.42Z" fill="#F58021"/>
+            </svg>
+          </a>
+        </article>`,
+          )
+          .join("");
+
+      return `
+      <div class="pets__slide">
+        <div class="pets__row" data-row="1">${renderRowCards(firstRow)}</div>
+        <div class="pets__row" data-row="2">${renderRowCards(secondRow)}</div>
+      </div>`;
+    })
+    .join("");
+
+  return `<div class="pets__track">${slideMarkup}</div>`;
+};
+
+const renderTestimonialsTrack = (cards: ReadonlyArray<FeedbackCardData>): string => {
+  const pages = toChunks(cards, 4);
+  const preparedPages = pages.length > 0 ? pages : [cards.slice(0, 4)];
+  if (preparedPages.length === 1) {
+    preparedPages.push(preparedPages[0]);
+  }
+
+  const slides = preparedPages
+    .map((page) => {
+      const cardsMarkup = page
+        .map(
+          (card) => `
+          <article class="testimonial-card">
+            <div class="testimonial-card__icon" aria-hidden="true">
+              <img src="${CITATION_ICON_SRC}" alt="" width="48" height="40" loading="lazy">
+            </div>
+            <h3 class="testimonial-card__title">${card.title}</h3>
+            <p class="testimonial-card__text">${card.text}</p>
+            <p class="testimonial-card__author">${card.author}</p>
+          </article>`,
+        )
+        .join("");
+
+      return `<div class="testimonials__slide"><div class="testimonials__grid" role="region" aria-label="User testimonials">${cardsMarkup}</div></div>`;
+    })
+    .join("");
+
+  return `<div class="testimonials__track">${slides}</div>`;
+};
+
+const initInfiniteSlider = (
+  trackSelector: string,
+  slideSelector: string,
+  prevSelector: string,
+  nextSelector: string,
+): void => {
+  const track = document.querySelector<HTMLElement>(trackSelector);
+  const slides = document.querySelectorAll<HTMLElement>(slideSelector);
+  const prevButton = document.querySelector<HTMLElement>(prevSelector);
+  const nextButton = document.querySelector<HTMLElement>(nextSelector);
+
+  if (!track || slides.length === 0 || !prevButton || !nextButton) return;
+
+  let currentSlide = 0;
+  const totalSlides = slides.length;
+  const stepPercent = 100 / totalSlides;
+
+  // Override static two-slide CSS sizing so sliders can contain any number of pages.
+  track.style.width = `${totalSlides * 100}%`;
+  slides.forEach((slide) => {
+    slide.style.flex = `0 0 ${100 / totalSlides}%`;
+    slide.style.minWidth = `${100 / totalSlides}%`;
+  });
+
+  const update = (): void => {
+    track.style.transform = `translateX(-${currentSlide * stepPercent}%)`;
+    slides.forEach((slide, index) => {
+      slide.setAttribute("aria-hidden", index === currentSlide ? "false" : "true");
+    });
+  };
+
+  const handleNext = (): void => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    update();
+  };
+
+  const handlePrev = (): void => {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    update();
+  };
+
+  prevButton.addEventListener("click", handlePrev);
+  nextButton.addEventListener("click", handleNext);
+
+  prevButton.addEventListener("keydown", (event) => {
+    if (!activationKeys.has(event.key)) return;
+    event.preventDefault();
+    handlePrev();
+  });
+
+  nextButton.addEventListener("keydown", (event) => {
+    if (!activationKeys.has(event.key)) return;
+    event.preventDefault();
+    handleNext();
+  });
+
+  update();
+};
+
+const renderSectionLoader = (container: HTMLElement): void => {
+  container.innerHTML = '<div class="section-loader" role="status" aria-live="polite" aria-label="Loading"></div>';
+};
+
+const renderSectionError = (container: HTMLElement): void => {
+  container.innerHTML = '<p class="section-error">Something went wrong. Please, refresh the page</p>';
 };
 
 const openCarePopup = (): void => {
@@ -270,111 +568,42 @@ const initDonationForm = (): void => {
   petDropdown?.addEventListener("click", (event) => event.stopPropagation());
 };
 
-const initPetsSlider = (): void => {
-  if (window.innerWidth <= 640) return;
+const initPetsSlider = async (): Promise<void> => {
+  const slider = document.querySelector<HTMLElement>(".pets__slider");
+  if (!slider) return;
 
-  const prevButton = document.querySelector<HTMLElement>(".pets__arrow--prev");
-  const nextButton = document.querySelector<HTMLElement>(".pets__arrow--next");
-  const track = document.querySelector<HTMLElement>(".pets__track");
-  const firstSlide = document.querySelector<HTMLElement>(".pets__slide:not(.pets__slide--mirrored)");
-  const mirroredSlide = document.querySelector<HTMLElement>(".pets__slide--mirrored");
-  const firstRow = document.querySelector<HTMLElement>('.pets__row[data-row="1"]');
-  const secondRow = document.querySelector<HTMLElement>('.pets__row[data-row="2"]');
+  renderSectionLoader(slider);
 
-  if (!prevButton || !nextButton || !track || !mirroredSlide || !firstRow || !secondRow) return;
-
-  mirroredSlide.appendChild(secondRow.cloneNode(true));
-  mirroredSlide.appendChild(firstRow.cloneNode(true));
-
-  let currentSlide = 0;
-  const totalSlides = 2;
-
-  const updateSlider = (): void => {
-    track.style.transform = `translateX(-${currentSlide * 50}%)`;
-    mirroredSlide.setAttribute("aria-hidden", currentSlide === 0 ? "true" : "false");
-    firstSlide?.setAttribute("aria-hidden", currentSlide === 1 ? "true" : "false");
-  };
-
-  const handlePrevious = (): void => {
-    if (currentSlide <= 0) return;
-    currentSlide -= 1;
-    updateSlider();
-  };
-
-  const handleNext = (): void => {
-    if (currentSlide >= totalSlides - 1) return;
-    currentSlide += 1;
-    updateSlider();
-  };
-
-  prevButton.addEventListener("click", handlePrevious);
-  nextButton.addEventListener("click", handleNext);
-
-  prevButton.addEventListener("keydown", (event) => {
-    if (!activationKeys.has(event.key)) return;
-    event.preventDefault();
-    handlePrevious();
-  });
-
-  nextButton.addEventListener("keydown", (event) => {
-    if (!activationKeys.has(event.key)) return;
-    event.preventDefault();
-    handleNext();
-  });
-
-  updateSlider();
+  try {
+    const pets = await getPets();
+    const cards = toPetCards(pets);
+    slider.innerHTML = renderPetsTrack(cards);
+    initInfiniteSlider(".pets__track", ".pets__slide", ".pets__arrow--prev", ".pets__arrow--next");
+    initPetCardLinks();
+  } catch {
+    renderSectionError(slider);
+  }
 };
 
-const initTestimonialsSlider = (): void => {
-  if (window.innerWidth <= 640) return;
+const initTestimonialsSlider = async (): Promise<void> => {
+  const slider = document.querySelector<HTMLElement>(".testimonials__slider");
+  if (!slider) return;
 
-  const prevButton = document.querySelector<HTMLElement>(".testimonials__arrow--prev");
-  const nextButton = document.querySelector<HTMLElement>(".testimonials__arrow--next");
-  const track = document.querySelector<HTMLElement>(".testimonials__track");
-  const slides = document.querySelectorAll<HTMLElement>(".testimonials__slide");
+  renderSectionLoader(slider);
 
-  if (!prevButton || !nextButton || !track || slides.length === 0) return;
-
-  let currentSlide = 0;
-  const totalSlides = slides.length;
-
-  const updateSlider = (): void => {
-    track.style.transform = `translateX(-${currentSlide * 50}%)`;
-    slides.forEach((slide, index) => {
-      slide.setAttribute("aria-hidden", index !== currentSlide ? "true" : "false");
-    });
-    prevButton.setAttribute("aria-disabled", currentSlide === 0 ? "true" : "false");
-    nextButton.setAttribute("aria-disabled", currentSlide === totalSlides - 1 ? "true" : "false");
-  };
-
-  const handlePrevious = (): void => {
-    if (currentSlide <= 0) return;
-    currentSlide -= 1;
-    updateSlider();
-  };
-
-  const handleNext = (): void => {
-    if (currentSlide >= totalSlides - 1) return;
-    currentSlide += 1;
-    updateSlider();
-  };
-
-  prevButton.addEventListener("click", handlePrevious);
-  nextButton.addEventListener("click", handleNext);
-
-  prevButton.addEventListener("keydown", (event) => {
-    if (!activationKeys.has(event.key)) return;
-    event.preventDefault();
-    handlePrevious();
-  });
-
-  nextButton.addEventListener("keydown", (event) => {
-    if (!activationKeys.has(event.key)) return;
-    event.preventDefault();
-    handleNext();
-  });
-
-  updateSlider();
+  try {
+    const feedbackList = await getFeedback();
+    const cards = toFeedbackCards(feedbackList);
+    slider.innerHTML = renderTestimonialsTrack(cards);
+    initInfiniteSlider(
+      ".testimonials__track",
+      ".testimonials__slide",
+      ".testimonials__arrow--prev",
+      ".testimonials__arrow--next",
+    );
+  } catch {
+    renderSectionError(slider);
+  }
 };
 
 const initHamburger = (): void => {
@@ -504,8 +733,8 @@ const initZoosSidebar = (): void => {
 const init = (): void => {
   initCarePopup();
   initDonationForm();
-  initPetsSlider();
-  initTestimonialsSlider();
+  void initPetsSlider();
+  void initTestimonialsSlider();
   initDonationBanner();
   initHamburger();
   initZoosSidebar();

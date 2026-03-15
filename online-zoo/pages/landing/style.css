@@ -562,6 +562,32 @@ body {
     width: 100%;
 }
 
+.section-loader {
+    width: 72px;
+    height: 72px;
+    margin: 40px auto;
+    border: 5px solid rgba(32, 17, 61, 0.18);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: section-spin 0.8s linear infinite;
+}
+
+.section-error {
+    margin: 28px auto;
+    max-width: 420px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 150%;
+    font-weight: 600;
+    color: #B30000;
+}
+
+@keyframes section-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .pets__track {
     display: flex;
     flex-direction: row;
