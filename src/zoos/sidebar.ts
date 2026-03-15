@@ -14,19 +14,19 @@ const defaultPetByPage: Record<string, number> = {
 
 const knownPetVisuals: Record<number, SidebarVisual> = {
   1: {
-    iconSrc: "../../../assets/icons/sidePanel_pandaBig.png",
+    iconSrc: new URL("../../online-zoo/assets/icons/sidePanel_pandaBig.png", import.meta.url).href,
     alt: "Panda",
   },
   2: {
-    iconSrc: "../../../assets/icons/sidePanel_lemurBig.png",
+    iconSrc: new URL("../../online-zoo/assets/icons/sidePanel_lemurBig.png", import.meta.url).href,
     alt: "Lemur",
   },
   3: {
-    iconSrc: "../../../assets/icons/sidePanel_gorillaBig.png",
+    iconSrc: new URL("../../online-zoo/assets/icons/sidePanel_gorillaBig.png", import.meta.url).href,
     alt: "Gorilla",
   },
   5: {
-    iconSrc: "../../../assets/icons/sidePanel_eagleBig.png",
+    iconSrc: new URL("../../online-zoo/assets/icons/sidePanel_eagleBig.png", import.meta.url).href,
     alt: "Eagles",
   },
 };

@@ -13,34 +13,37 @@ interface CamVisualConfig {
 }
 
 const infoImages: Record<number, InfoImageConfig> = {
-  1: { src: "../../../assets/images/panda-info.jpg", alt: "Giant Panda" },
-  2: { src: "../../../assets/images/lemur-info.jpg", alt: "Madagascarian Lemur" },
-  3: { src: "../../../assets/images/gorilla-info.jpg", alt: "Gorilla in Congo" },
-  5: { src: "../../../assets/images/eagles-info.jpg", alt: "West End Bald Eagles" },
+  1: { src: new URL("../../online-zoo/assets/images/panda-info.jpg", import.meta.url).href, alt: "Giant Panda" },
+  2: { src: new URL("../../online-zoo/assets/images/lemur-info.jpg", import.meta.url).href, alt: "Madagascarian Lemur" },
+  3: { src: new URL("../../online-zoo/assets/images/gorilla-info.jpg", import.meta.url).href, alt: "Gorilla in Congo" },
+  5: {
+    src: new URL("../../online-zoo/assets/images/eagles-info.jpg", import.meta.url).href,
+    alt: "West End Bald Eagles",
+  },
 };
 
 const camVisuals: Record<number, CamVisualConfig> = {
   1: {
-    playerPoster: "../../../assets/images/Panda live.jpg",
-    cardPoster: "../../../assets/images/Panda live.jpg",
+    playerPoster: new URL("../../online-zoo/assets/images/Panda live.jpg", import.meta.url).href,
+    cardPoster: new URL("../../online-zoo/assets/images/Panda live.jpg", import.meta.url).href,
     streamUrl: "https://www.youtube.com/watch?v=YMOYM1YZ97o",
     playerLabel: "Lucas, the Giant Panda cam 1",
   },
   2: {
-    playerPoster: "../../../assets/images/lemur live.jpg",
-    cardPoster: "../../../assets/images/lemur live.jpg",
+    playerPoster: new URL("../../online-zoo/assets/images/lemur live.jpg", import.meta.url).href,
+    cardPoster: new URL("../../online-zoo/assets/images/lemur live.jpg", import.meta.url).href,
     streamUrl: "https://www.youtube.com/watch?v=8Pj-YEQbojk",
     playerLabel: "Andy, the Madagascarian Lemur cam 1",
   },
   3: {
-    playerPoster: "../../../assets/images/Gorilla live.jpg",
-    cardPoster: "../../../assets/images/Gorilla live.jpg",
+    playerPoster: new URL("../../online-zoo/assets/images/Gorilla live.jpg", import.meta.url).href,
+    cardPoster: new URL("../../online-zoo/assets/images/Gorilla live.jpg", import.meta.url).href,
     streamUrl: "https://www.youtube.com/watch?v=rgXWDk7rh4w",
     playerLabel: "Glen, the Gorilla cam 1",
   },
   5: {
-    playerPoster: "../../../assets/images/Eagles live.jpg",
-    cardPoster: "../../../assets/images/Eagles live.jpg",
+    playerPoster: new URL("../../online-zoo/assets/images/Eagles live.jpg", import.meta.url).href,
+    cardPoster: new URL("../../online-zoo/assets/images/Eagles live.jpg", import.meta.url).href,
     streamUrl: "https://www.youtube.com/watch?v=LuS9f8lKEw8",
     playerLabel: "Sam & Lora, the Bald Eagles cam 1",
   },
