@@ -709,12 +709,6 @@ const initZoosSidebar = (): void => {
     }
   };
 
-  sidebar.addEventListener("click", (event) => {
-    if (sidebar.classList.contains("open")) return;
-    event.preventDefault();
-    toggleSidebar();
-  });
-
   if (!collapseButton) return;
 
   collapseButton.addEventListener("click", (event) => {

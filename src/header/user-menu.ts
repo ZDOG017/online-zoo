@@ -117,8 +117,8 @@ const insertControlIntoNav = (nav: HTMLElement): void => {
   const social = nav.querySelector(".nav__social");
   const parts = createUserControl();
 
-  if (social) {
-    social.append(parts.wrapper);
+  if (social?.parentNode) {
+    social.parentNode.insertBefore(parts.wrapper, social.nextSibling);
   } else {
     nav.append(parts.wrapper);
   }
