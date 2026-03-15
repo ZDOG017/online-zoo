@@ -190,6 +190,24 @@ const renderError = (): void => {
     row.textContent = DETAIL_ERROR_TEXT;
   });
 
+  const mainVideo = document.querySelector<HTMLVideoElement>(".zoos-cams__video");
+  if (mainVideo) {
+    mainVideo.removeAttribute("poster");
+  }
+
+  const camCardImages = document.querySelectorAll<HTMLImageElement>(".zoos-cams__card-image img");
+  camCardImages.forEach((image) => {
+    image.removeAttribute("src");
+    image.style.visibility = "hidden";
+  });
+
+  const infoImage = document.querySelector<HTMLImageElement>(".zoos-info__image");
+  if (infoImage) {
+    infoImage.removeAttribute("src");
+    infoImage.style.visibility = "hidden";
+    infoImage.alt = DETAIL_ERROR_TEXT;
+  }
+
   const mapButton = document.querySelector<HTMLElement>(".zoos-info__map-btn");
   if (mapButton) {
     mapButton.setAttribute("aria-disabled", "true");
@@ -217,6 +235,24 @@ const renderPendingDetails = (): void => {
   infoRows.forEach((row) => {
     row.textContent = pendingText;
   });
+
+  const mainVideo = document.querySelector<HTMLVideoElement>(".zoos-cams__video");
+  if (mainVideo) {
+    mainVideo.removeAttribute("poster");
+  }
+
+  const camCardImages = document.querySelectorAll<HTMLImageElement>(".zoos-cams__card-image img");
+  camCardImages.forEach((image) => {
+    image.removeAttribute("src");
+    image.style.visibility = "hidden";
+  });
+
+  const infoImage = document.querySelector<HTMLImageElement>(".zoos-info__image");
+  if (infoImage) {
+    infoImage.removeAttribute("src");
+    infoImage.style.visibility = "hidden";
+    infoImage.alt = pendingText;
+  }
 
   const mapButton = document.querySelector<HTMLElement>(".zoos-info__map-btn");
   if (mapButton) {
@@ -290,6 +326,7 @@ const updatePetDetails = (pet: PetDetails): void => {
   if (image) {
     const mappedImage = infoImages[pet.id] ?? infoImages[1];
     image.src = mappedImage.src;
+    image.style.visibility = "visible";
     image.alt = getField(pet.commonName, mappedImage.alt);
   }
 
@@ -324,6 +361,7 @@ const updateCamVisuals = (pet: PetDetails): void => {
     const cardImage = card.querySelector<HTMLImageElement>(".zoos-cams__card-image img");
     if (cardImage) {
       cardImage.src = visual.cardPoster;
+      cardImage.style.visibility = "visible";
       cardImage.alt = `${getPetName(pet)} cam ${index + 1}`;
     }
   });
