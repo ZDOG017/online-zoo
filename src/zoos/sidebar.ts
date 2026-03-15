@@ -2,7 +2,6 @@ import { getCameras, type CameraItem } from "../api";
 
 interface SidebarVisual {
   iconSrc: string;
-  link: string;
   alt: string;
 }
 
@@ -16,22 +15,18 @@ const defaultPetByPage: Record<string, number> = {
 const knownPetVisuals: Record<number, SidebarVisual> = {
   1: {
     iconSrc: "../../../assets/icons/sidePanel_pandaBig.png",
-    link: "../panda/index.html",
     alt: "Panda",
   },
   2: {
     iconSrc: "../../../assets/icons/sidePanel_lemurBig.png",
-    link: "../lemur/index.html",
     alt: "Lemur",
   },
   3: {
     iconSrc: "../../../assets/icons/sidePanel_gorillaBig.png",
-    link: "../gorilla/index.html",
     alt: "Gorilla",
   },
   5: {
     iconSrc: "../../../assets/icons/sidePanel_eagleBig.png",
-    link: "../eagles/index.html",
     alt: "Eagles",
   },
 };
@@ -77,16 +72,13 @@ const toSidebarItems = (cameras: ReadonlyArray<CameraItem>): string => {
       const cameraPetId = typeof camera.petId === "number" ? camera.petId : index + 1;
       const text = typeof camera.text === "string" && camera.text.length > 0 ? camera.text : "Watch live animal cam";
       const visual = pickVisual(cameraPetId, index);
-      const link = knownPetVisuals[cameraPetId]?.link ?? `${visual.link}?petId=${cameraPetId}`;
       const activeClass = cameraPetId === activePetId ? " zoos-sidebar__box--active" : "";
 
       return `
-      <a href="${link}">
-        <div class="zoos-sidebar__box${activeClass}">
-          <img src="${visual.iconSrc}" alt="${visual.alt}">
-          <span class="zoos-sidebar__label">${text}</span>
-        </div>
-      </a>`;
+      <button type="button" class="zoos-sidebar__box${activeClass}" data-pet-id="${cameraPetId}" aria-label="${text}">
+        <img src="${visual.iconSrc}" alt="${visual.alt}">
+        <span class="zoos-sidebar__label">${text}</span>
+      </button>`;
     })
     .join("");
 
@@ -99,6 +91,22 @@ const toSidebarItems = (cameras: ReadonlyArray<CameraItem>): string => {
   }
 
   return `${itemsMarkup}<div class="zoos-sidebar__box zoos-sidebar__arrow-down">&#8964;</div>`;
+};
+
+const updateActiveItem = (container: HTMLElement, petId: number): void => {
+  const boxes = container.querySelectorAll<HTMLElement>(".zoos-sidebar__box[data-pet-id]");
+  boxes.forEach((box) => {
+    const boxPetId = Number.parseInt(box.dataset.petId ?? "", 10);
+    box.classList.toggle("zoos-sidebar__box--active", boxPetId === petId);
+  });
+};
+
+const emitPetSelection = (petId: number): void => {
+  window.dispatchEvent(
+    new CustomEvent("zoo:select-pet", {
+      detail: { petId },
+    }),
+  );
 };
 
 const renderLoader = (container: HTMLElement): void => {
@@ -126,6 +134,28 @@ const initZoosSidebarData = async (): Promise<void> => {
   try {
     const cameras = await getCameras();
     container.innerHTML = toSidebarItems(cameras);
+
+    const activePetId = getActivePetId();
+    updateActiveItem(container, activePetId);
+    emitPetSelection(activePetId);
+
+    const interactiveBoxes = container.querySelectorAll<HTMLElement>(".zoos-sidebar__box[data-pet-id]");
+    interactiveBoxes.forEach((box) => {
+      const petId = Number.parseInt(box.dataset.petId ?? "", 10);
+      if (Number.isNaN(petId) || petId <= 0) return;
+
+      const handleSelect = (): void => {
+        updateActiveItem(container, petId);
+        emitPetSelection(petId);
+      };
+
+      box.addEventListener("click", handleSelect);
+      box.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        handleSelect();
+      });
+    });
   } catch {
     renderError(container);
   }

@@ -43,12 +43,20 @@ export const getPets = async (signal?: AbortSignal): Promise<ApiList<PetSummary>
 export const getPetById = async (
   petId: PetId,
   signal?: AbortSignal,
-): Promise<PetDetails> =>
-  request<PetDetails>({
+): Promise<PetDetails> => {
+  const payload = await request<unknown>({
     route: getPetByIdRoute(petId),
     method: HttpMethod.GET,
     signal,
   });
+  if (typeof payload === "object" && payload !== null) {
+    const record = payload as Record<string, unknown>;
+    if (typeof record.data === "object" && record.data !== null) {
+      return record.data as PetDetails;
+    }
+  }
+  return payload as PetDetails;
+};
 
 export const getFeedback = async (signal?: AbortSignal): Promise<ApiList<FeedbackItem>> => {
   const payload = await request<unknown>({
