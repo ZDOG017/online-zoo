@@ -1,0 +1,153 @@
+.signin-page {
+  min-height: 100vh;
+  background: #f7f6f2;
+}
+
+.signin {
+  padding: 120px 20px 80px;
+}
+
+.signin__section {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.signin__card {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 24px;
+  padding: 32px 28px;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 8%);
+}
+
+.signin__title {
+  margin: 0;
+  color: #080029;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.signin__subtitle {
+  margin: 14px 0 0;
+  color: #747474;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.signin-form {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.signin-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.signin-form__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #0f0049;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.signin-form__required {
+  color: #d00000;
+}
+
+.signin-form__control-wrap {
+  position: relative;
+}
+
+.signin-form__input {
+  width: 100%;
+  height: 54px;
+  border: 1px solid #b8b8b8;
+  border-radius: 10px;
+  padding: 0 44px 0 14px;
+  color: #0f0049;
+  font-size: 16px;
+  background: #fff;
+  transition: border-color 0.2s ease;
+}
+
+.signin-form__input:focus {
+  outline: none;
+  border-color: #0f0049;
+}
+
+.signin-form__icon {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #d00000;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.signin-form__error {
+  min-height: 18px;
+  margin: 0;
+  color: #d00000;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.signin-form__field--invalid .signin-form__input {
+  border-color: #d00000;
+}
+
+.signin-form__field--invalid .signin-form__icon {
+  display: inline-flex;
+}
+
+.signin-form__auth-error {
+  min-height: 20px;
+  margin: 0;
+  color: #d00000;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.signin-form__submit {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.signin-form__submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 767px) {
+  .signin {
+    padding-top: 96px;
+  }
+
+  .signin__card {
+    border-radius: 18px;
+    padding: 24px 18px;
+  }
+
+  .signin__title {
+    font-size: 34px;
+  }
+
+  .signin__subtitle {
+    font-size: 16px;
+  }
+}

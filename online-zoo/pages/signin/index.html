@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Zoo - Sign In</title>
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../landing/style.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="signin-page">
+    <header class="header">
+        <div class="container">
+            <nav class="nav" aria-label="Main navigation">
+                <a href="../landing/index.html" class="nav__logo" aria-label="Online Zoo home">
+                    <img src="../../assets/icons/Logo.svg" alt="Online Zoo" width="96" height="50">
+                </a>
+                <button class="nav__hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                    <span class="nav__hamburger-line"></span>
+                </button>
+                <ul class="nav__menu" id="nav-menu" role="menubar">
+                    <li role="none"><a href="../landing/index.html" class="nav__link">About</a></li>
+                    <li role="none"><a href="../map/index.html" class="nav__link">Map</a></li>
+                    <li role="none"><a href="../zoos/panda/index.html" class="nav__link">Zoos</a></li>
+                    <li role="none"><a href="../contact/index.html" class="nav__link">Contact us</a></li>
+                    <li role="none"><a href="#" class="nav__link">Design</a></li>
+                </ul>
+                <div class="nav__social">
+                    <a href="#" class="nav__social-link" aria-label="YouTube">
+                        <img src="../../assets/icons/YouTube.svg" alt="youtube" width="40" height="40">
+                    </a>
+                    <a href="#" class="nav__social-link" aria-label="Instagram">
+                        <img src="../../assets/icons/Instagram.svg" alt="instagram" width="40" height="40">
+                    </a>
+                    <a href="#" class="nav__social-link" aria-label="Facebook">
+                        <img src="../../assets/icons/Facebook.svg" alt="facebook" width="40" height="40">
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Mobile menu">
+        <button class="nav-overlay__close" type="button" aria-label="Close menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <ul class="nav-overlay__menu" role="menubar">
+            <li role="none"><a href="../landing/index.html" class="nav-overlay__link">About</a></li>
+            <li role="none"><a href="../map/index.html" class="nav-overlay__link">Map</a></li>
+            <li role="none"><a href="../zoos/panda/index.html" class="nav-overlay__link">Zoos</a></li>
+            <li role="none"><a href="../contact/index.html" class="nav-overlay__link">Contact us</a></li>
+            <li role="none"><a href="#" class="nav-overlay__link">Design</a></li>
+        </ul>
+    </div>
+
+    <main class="signin">
+        <section class="signin__section" aria-labelledby="signin-title">
+            <div class="signin__card">
+                <h1 class="signin__title" id="signin-title">Sign In</h1>
+                <p class="signin__subtitle">Sign in to continue and support your favorite animals.</p>
+
+                <form class="signin-form" data-signin-form novalidate aria-label="Sign in form">
+                    <div class="signin-form__field" data-field="login">
+                        <label class="signin-form__label" for="signin-login">
+                            <span class="signin-form__required">*</span>
+                            <span>Login</span>
+                        </label>
+                        <div class="signin-form__control-wrap">
+                            <input
+                                id="signin-login"
+                                name="login"
+                                type="text"
+                                class="signin-form__input"
+                                aria-required="true"
+                                aria-describedby="signin-login-error"
+                                autocomplete="username"
+                                placeholder="Enter your login"
+                            >
+                            <span class="signin-form__icon" aria-hidden="true">!</span>
+                        </div>
+                        <p class="signin-form__error" id="signin-login-error" aria-live="polite"></p>
+                    </div>
+
+                    <div class="signin-form__field" data-field="password">
+                        <label class="signin-form__label" for="signin-password">
+                            <span class="signin-form__required">*</span>
+                            <span>Password</span>
+                        </label>
+                        <div class="signin-form__control-wrap">
+                            <input
+                                id="signin-password"
+                                name="password"
+                                type="password"
+                                class="signin-form__input"
+                                aria-required="true"
+                                aria-describedby="signin-password-error"
+                                autocomplete="current-password"
+                                placeholder="Enter your password"
+                            >
+                            <span class="signin-form__icon" aria-hidden="true">!</span>
+                        </div>
+                        <p class="signin-form__error" id="signin-password-error" aria-live="polite"></p>
+                    </div>
+
+                    <p class="signin-form__auth-error" data-auth-error aria-live="polite"></p>
+
+                    <button type="submit" class="signin-form__submit btn btn--primary" data-signin-submit disabled aria-disabled="true">
+                        <span>Sign In</span>
+                        <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__top">
+                <div class="footer__logos">
+                    <a href="../landing/index.html" class="footer__logo" aria-label="Online Zoo home">
+                        <img src="../../assets/icons/Logo_footer.svg" alt="Online Zoo" width="96" height="50" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__logo footer__logo--yem" aria-label="Yem Digital">
+                        <img src="../../assets/icons/Yem Digital.svg" alt="Yem Digital" width="50" height="50" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__logo footer__logo--rss" aria-label="RS School">
+                        <img src="../../assets/icons/rs_school_js logo.svg" alt="RS School" width="138" height="51" loading="lazy">
+                    </a>
+                </div>
+                <nav class="footer__nav" aria-label="Footer navigation">
+                    <ul class="footer__menu" role="menubar">
+                        <li role="none"><a href="../landing/index.html" class="footer__link">About</a></li>
+                        <li role="none"><a href="../map/index.html" class="footer__link">Map</a></li>
+                        <li role="none"><a href="../zoos/panda/index.html" class="footer__link">Zoos</a></li>
+                        <li role="none"><a href="../contact/index.html" class="footer__link">Contact us</a></li>
+                        <li role="none"><a href="#" class="footer__link">Design</a></li>
+                    </ul>
+                </nav>
+                <button class="footer__donate-btn" type="button" aria-label="Donate for volunteers">
+                    <span>Donate for volunteers</span>
+                    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M0 11H21.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M13 1L23 11L13 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="footer__divider" aria-hidden="true"></div>
+            <div class="footer__bottom">
+                <div class="footer__copyright">
+                    <span>© 2021 DinaK</span>
+                    <span>© Yem Digital</span>
+                    <span>© RSSchool</span>
+                </div>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link" aria-label="YouTube">
+                        <img src="../../assets/icons/YouTube.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="Instagram">
+                        <img src="../../assets/icons/Instagram.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="Facebook">
+                        <img src="../../assets/icons/Facebook.svg" alt="" width="40" height="40" loading="lazy">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
