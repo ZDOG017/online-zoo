@@ -1,8 +1,9 @@
 import { clearAuth, getCurrentUser, isLoggedIn } from "../auth";
 
-const SIGN_IN_URL = "/online-zoo/pages/signin/index.html";
-const REGISTER_URL = "/online-zoo/pages/register/index.html";
-const LANDING_URL = "/online-zoo/pages/landing/index.html";
+const BASE_URL = import.meta.env.BASE_URL;
+const SIGN_IN_URL = `${BASE_URL}online-zoo/pages/signin/index.html`;
+const REGISTER_URL = `${BASE_URL}online-zoo/pages/register/index.html`;
+const LANDING_URL = `${BASE_URL}online-zoo/pages/landing/index.html`;
 
 interface MenuParts {
   wrapper: HTMLElement;
