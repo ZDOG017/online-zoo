@@ -6,7 +6,7 @@ const POPUP_FORM_ID = "popup-donation-form";
 const TOTAL_STEPS = 3;
 
 const activationKeys: ReadonlySet<string> = new Set(["Enter", " "]);
-const CITATION_ICON_SRC = "../../assets/icons/citation-icon.svg";
+const CITATION_ICON_SRC = new URL("../../online-zoo/assets/icons/citation-icon.svg", import.meta.url).href;
 const DEFAULT_PET_LINK = "../zoos/panda/index.html";
 
 interface PetVisualConfig {
@@ -62,56 +62,56 @@ const PET_ID_BY_SLUG: Record<string, number> = {
 const petVisualCatalog: ReadonlyArray<PetVisualConfig> = [
   {
     nameHint: "panda",
-    imageSrc: "../../assets/images/1Panda.jpg",
+    imageSrc: new URL("../../online-zoo/assets/images/1Panda.jpg", import.meta.url).href,
     badge: "Lucas",
     link: "../zoos/panda/index.html",
     imageAlt: "Giant Panda eating bamboo",
   },
   {
     nameHint: "lemur",
-    imageSrc: "../../assets/images/2Madagascarian Lemur.jpg",
+    imageSrc: new URL("../../online-zoo/assets/images/2Madagascarian Lemur.jpg", import.meta.url).href,
     badge: "Andy",
     link: "../zoos/lemur/index.html",
     imageAlt: "Madagascarian Lemur sitting on a branch",
   },
   {
     nameHint: "gorilla",
-    imageSrc: "../../assets/images/3Gorilla in Congo.jpg",
+    imageSrc: new URL("../../online-zoo/assets/images/3Gorilla in Congo.jpg", import.meta.url).href,
     badge: "Glen",
     link: "../zoos/gorilla/index.html",
     imageAlt: "Gorilla in its Congo habitat",
   },
   {
     nameHint: "alligator",
-    imageSrc: "../../assets/images/4Alligator.jpg",
+    imageSrc: new URL("../../online-zoo/assets/images/4Alligator.jpg", import.meta.url).href,
     badge: "Mike",
     link: "https://www.youtube.com/watch?v=chu7h09VIoU",
     imageAlt: "Chinese Alligator basking",
   },
   {
     nameHint: "eagle",
-    imageSrc: "../../assets/images/5West End Bald Eagles.jpg",
+    imageSrc: new URL("../../online-zoo/assets/images/5West End Bald Eagles.jpg", import.meta.url).href,
     badge: "Sam & Lora",
     link: "../zoos/eagles/index.html",
     imageAlt: "West End Bald Eagles perched in a tree",
   },
   {
     nameHint: "koala",
-    imageSrc: "../../assets/images/6Australian Koala.jpg",
+    imageSrc: new URL("../../online-zoo/assets/images/6Australian Koala.jpg", import.meta.url).href,
     badge: "Liz",
     link: "https://www.youtube.com/watch?v=aRs5EN4epyE",
     imageAlt: "Australian Koala in a eucalyptus tree",
   },
   {
     nameHint: "tiger",
-    imageSrc: "../../assets/images/7Sumatran Tiger.jpg",
+    imageSrc: new URL("../../online-zoo/assets/images/7Sumatran Tiger.jpg", import.meta.url).href,
     badge: "Senja",
     link: "https://www.youtube.com/watch?v=rpS9vMij3yE",
     imageAlt: "Sumatran Tiger in its habitat",
   },
   {
     nameHint: "lion",
-    imageSrc: "../../assets/images/8African Lion.jpg",
+    imageSrc: new URL("../../online-zoo/assets/images/8African Lion.jpg", import.meta.url).href,
     badge: "Shake",
     link: "https://www.youtube.com/watch?v=alWgeYnQd98",
     imageAlt: "African Lion in the savanna",
