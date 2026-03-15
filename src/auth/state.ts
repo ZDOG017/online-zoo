@@ -40,7 +40,7 @@ const writeStorage = (key: AuthStorageKey, value: string): void => {
   try {
     window.localStorage.setItem(key, value);
   } catch {
-    // localStorage can fail in private mode or due to quota.
+    return;
   }
 };
 
@@ -50,7 +50,7 @@ const removeStorage = (key: AuthStorageKey): void => {
   try {
     window.localStorage.removeItem(key);
   } catch {
-    // Keep app resilient even when storage is unavailable.
+    return;
   }
 };
 

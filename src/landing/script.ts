@@ -1,4 +1,5 @@
-import { getFeedback, getPets, type ApiList, type FeedbackItem, type PetSummary } from "../api";
+import { createDonation, getFeedback, getPets, type ApiList, type FeedbackItem, type PetSummary } from "../api";
+import { getCurrentUser, isLoggedIn } from "../auth";
 
 const POPUP_CARE_ID = "popup-care";
 const POPUP_FORM_ID = "popup-donation-form";
@@ -30,6 +31,33 @@ interface FeedbackCardData {
   text: string;
   author: string;
 }
+
+interface SavedDonationCard {
+  id: string;
+  label: string;
+  cardNumber: string;
+  expiry: string;
+  cvv: string;
+}
+
+interface DonationFormState {
+  amount: number | null;
+  petId: number | null;
+  petName: string;
+  isSubmitting: boolean;
+}
+
+const DONATION_CARD_STORAGE_PREFIX = "online-zoo:donation:cards:";
+const PET_ID_BY_SLUG: Record<string, number> = {
+  lukas: 1,
+  andy: 2,
+  glen: 3,
+  mike: 4,
+  "sam-lora": 5,
+  liz: 6,
+  shake: 7,
+  senja: 8,
+};
 
 const petVisualCatalog: ReadonlyArray<PetVisualConfig> = [
   {
@@ -107,6 +135,135 @@ const parseStep = (value: string | undefined): number | null => {
   if (!value) return null;
   const parsed = Number.parseInt(value, 10);
   return Number.isNaN(parsed) ? null : parsed;
+};
+
+const parsePositiveAmount = (rawValue: string): number | null => {
+  const normalized = rawValue.trim().replaceAll(",", ".");
+  if (!/^\d+(\.\d{1,2})?$/.test(normalized)) return null;
+
+  const amount = Number.parseFloat(normalized);
+  if (!Number.isFinite(amount) || amount <= 0) return null;
+  return amount;
+};
+
+const isValidDonorName = (value: string): boolean => {
+  const normalized = value.trim();
+  return normalized.length > 0 && /^[A-Za-z ]+$/.test(normalized);
+};
+
+const isValidEmail = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
+const normalizeCardDigits = (value: string): string => value.replace(/\D/g, "");
+
+const formatCardNumber = (value: string): string => {
+  const digits = normalizeCardDigits(value).slice(0, 16);
+  return digits.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
+};
+
+const isValidCardNumber = (value: string): boolean => normalizeCardDigits(value).length === 16;
+
+const formatExpiry = (value: string): string => {
+  const digits = value.replace(/\D/g, "").slice(0, 4);
+  if (digits.length <= 2) return digits;
+  return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+};
+
+const isValidExpiry = (value: string): boolean => {
+  const match = value.match(/^(\d{2})\/(\d{2})$/);
+  if (!match) return false;
+
+  const month = Number.parseInt(match[1], 10);
+  const year = Number.parseInt(match[2], 10);
+  if (month < 1 || month > 12) return false;
+
+  const now = new Date();
+  const currentYear = now.getFullYear() % 100;
+  const currentMonth = now.getMonth() + 1;
+
+  if (year < currentYear) return false;
+  if (year === currentYear && month < currentMonth) return false;
+  return true;
+};
+
+const isValidCvv = (value: string): boolean => /^\d{3}$/.test(value);
+
+const safeReadStorage = (key: string): string | null => {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
+
+const safeWriteStorage = (key: string, value: string): void => {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    return;
+  }
+};
+
+const getCardStorageKey = (email: string): string =>
+  `${DONATION_CARD_STORAGE_PREFIX}${email.trim().toLowerCase()}`;
+
+const toCardLabel = (cardNumber: string): string => {
+  const digits = normalizeCardDigits(cardNumber);
+  if (digits.length !== 16) return "Saved card";
+  return `${digits.slice(0, 4)} **** **** ${digits.slice(12)}`;
+};
+
+const readSavedCards = (email: string): SavedDonationCard[] => {
+  if (!email.trim()) return [];
+  const raw = safeReadStorage(getCardStorageKey(email));
+  if (!raw) return [];
+
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item): item is SavedDonationCard => {
+      if (typeof item !== "object" || item === null) return false;
+      const record = item as Record<string, unknown>;
+      return (
+        typeof record.id === "string" &&
+        typeof record.label === "string" &&
+        typeof record.cardNumber === "string" &&
+        typeof record.expiry === "string" &&
+        typeof record.cvv === "string"
+      );
+    });
+  } catch {
+    return [];
+  }
+};
+
+const writeSavedCards = (email: string, cards: ReadonlyArray<SavedDonationCard>): void => {
+  if (!email.trim()) return;
+  safeWriteStorage(getCardStorageKey(email), JSON.stringify(cards));
+};
+
+const upsertSavedCard = (
+  email: string,
+  cardNumber: string,
+  expiry: string,
+  cvv: string,
+): SavedDonationCard[] => {
+  const normalizedDigits = normalizeCardDigits(cardNumber);
+  if (normalizedDigits.length !== 16) return readSavedCards(email);
+
+  const currentCards = readSavedCards(email);
+  const cardId = `${normalizedDigits.slice(0, 6)}-${normalizedDigits.slice(12)}-${expiry}`;
+  const nextCard: SavedDonationCard = {
+    id: cardId,
+    label: toCardLabel(normalizedDigits),
+    cardNumber: normalizedDigits,
+    expiry,
+    cvv,
+  };
+
+  const withoutCurrent = currentCards.filter((card) => card.id !== cardId);
+  const updatedCards = [nextCard, ...withoutCurrent];
+  writeSavedCards(email, updatedCards);
+  return updatedCards;
 };
 
 const getStringField = (source: unknown, keys: ReadonlyArray<string>): string | null => {
@@ -271,7 +428,6 @@ const initInfiniteSlider = (
   const totalSlides = slides.length;
   const stepPercent = 100 / totalSlides;
 
-  // Override static two-slide CSS sizing so sliders can contain any number of pages.
   track.style.width = `${totalSlides * 100}%`;
   slides.forEach((slide) => {
     slide.style.flex = `0 0 ${100 / totalSlides}%`;
@@ -395,19 +551,7 @@ const openDonationForm = (presetAmount: number | null): void => {
   setBodyScrollLocked(true);
 
   setDonationStep(1);
-
-  if (presetAmount !== null) {
-    const presetAmountButton = overlay.querySelector<HTMLElement>(
-      `.donation-form__amount-btn[data-amount="${presetAmount}"]`,
-    );
-
-    if (presetAmountButton) {
-      overlay
-        .querySelectorAll<HTMLElement>(".donation-form__amount-btn")
-        .forEach((button) => button.classList.remove("is-selected"));
-      presetAmountButton.classList.add("is-selected");
-    }
-  }
+  overlay.dispatchEvent(new CustomEvent("donation:open", { detail: { presetAmount } }));
 
   const firstFocusable = overlay.querySelector<HTMLElement>(
     ".donation-form__amount-btn, .donation-form__input",
@@ -491,67 +635,415 @@ const initDonationForm = (): void => {
   const overlay = getPopup(POPUP_FORM_ID);
   if (!overlay) return;
 
+  const nextButton = overlay.querySelector<HTMLButtonElement>(".donation-form__next");
+  const backButton = overlay.querySelector<HTMLButtonElement>(".donation-form__back");
+  const completeButton = overlay.querySelector<HTMLButtonElement>(".donation-form__complete");
+  const petTrigger = document.getElementById("donation-pet-trigger");
+  const petTriggerText = petTrigger?.querySelector<HTMLElement>(".donation-form__pet-btn-text") ?? null;
+  const petDropdown = document.getElementById("donation-pet-dropdown");
+  const otherButton = overlay.querySelector<HTMLButtonElement>(".donation-form__other-btn");
+  const amountButtons = overlay.querySelectorAll<HTMLButtonElement>(".donation-form__amount-btn");
+  const amountInput = overlay.querySelector<HTMLInputElement>(".donation-form__input--amount");
+  const nameInput = overlay.querySelector<HTMLInputElement>(
+    '.donation-form__step[data-step="2"] .donation-form__input--full:nth-of-type(1)',
+  );
+  const emailInput = overlay.querySelector<HTMLInputElement>(
+    '.donation-form__step[data-step="2"] .donation-form__input--full:nth-of-type(2)',
+  );
+  const cardInput = overlay.querySelector<HTMLInputElement>("#donation-card");
+  const cvvInput = overlay.querySelector<HTMLInputElement>("#donation-cvv");
+  const expiryWraps = overlay.querySelectorAll<HTMLElement>(
+    '.donation-form__step[data-step="3"] .donation-form__select-wrap',
+  );
+  const expiryInput = expiryWraps[0]?.querySelector<HTMLInputElement>(".donation-form__input--select") ?? null;
+  const paymentSection = overlay.querySelector<HTMLElement>(
+    '.donation-form__step[data-step="3"] .donation-form__section--payment',
+  );
+  const footer = overlay.querySelector<HTMLElement>(".donation-form__footer");
+
+  if (
+    !nextButton ||
+    !backButton ||
+    !completeButton ||
+    !petTrigger ||
+    !petTriggerText ||
+    !petDropdown ||
+    !otherButton ||
+    !amountInput ||
+    !nameInput ||
+    !emailInput ||
+    !cardInput ||
+    !cvvInput ||
+    !expiryInput ||
+    !paymentSection ||
+    !footer
+  ) {
+    return;
+  }
+
+  const statusMessage = document.createElement("p");
+  statusMessage.className = "donation-form__status";
+  statusMessage.setAttribute("aria-live", "polite");
+  statusMessage.hidden = true;
+  footer.insertAdjacentElement("beforebegin", statusMessage);
+
+  const savedCardsBlock = document.createElement("div");
+  savedCardsBlock.className = "donation-form__saved-cards";
+  savedCardsBlock.hidden = true;
+  savedCardsBlock.innerHTML = `
+    <label class="donation-form__label" for="donation-saved-cards">Saved cards</label>
+    <select id="donation-saved-cards" class="donation-form__input donation-form__input--full donation-form__saved-select">
+      <option value="">Choose a saved card</option>
+    </select>
+  `;
+  paymentSection.insertAdjacentElement("afterbegin", savedCardsBlock);
+
+  const savedCardsSelect = savedCardsBlock.querySelector<HTMLSelectElement>("#donation-saved-cards");
+  if (!savedCardsSelect) return;
+
+  const saveCardRow = document.createElement("label");
+  saveCardRow.className = "donation-form__checkbox-label donation-form__checkbox-label--save-card";
+  saveCardRow.hidden = true;
+  saveCardRow.innerHTML = `
+    <input type="checkbox" class="donation-form__checkbox donation-form__save-card-checkbox">
+    <span>Save card info for future donations</span>
+  `;
+  paymentSection.append(saveCardRow);
+
+  const saveCardCheckbox = saveCardRow.querySelector<HTMLInputElement>(".donation-form__save-card-checkbox");
+  if (!saveCardCheckbox) return;
+
+  if (expiryWraps[1]) {
+    expiryWraps[1].style.display = "none";
+  }
+  expiryInput.removeAttribute("readonly");
+  expiryInput.placeholder = "MM/YY";
+  expiryInput.setAttribute("maxlength", "5");
+  expiryInput.setAttribute("inputmode", "numeric");
+  expiryInput.setAttribute("aria-label", "Expiration date MM slash YY");
+
+  cvvInput.setAttribute("maxlength", "3");
+  cvvInput.setAttribute("inputmode", "numeric");
+  cardInput.setAttribute("maxlength", "19");
+  cardInput.setAttribute("inputmode", "numeric");
+
+  const state: DonationFormState = {
+    amount: null,
+    petId: null,
+    petName: "",
+    isSubmitting: false,
+  };
+
+  let activeSavedCards: SavedDonationCard[] = [];
+
+  const setFieldInvalid = (field: HTMLElement, invalid: boolean): void => {
+    field.classList.toggle("is-invalid", invalid);
+    if (field instanceof HTMLInputElement) {
+      field.setAttribute("aria-invalid", String(invalid));
+    }
+  };
+
+  const setStatus = (message: string, type: "error" | "success"): void => {
+    statusMessage.textContent = message;
+    statusMessage.hidden = false;
+    statusMessage.classList.toggle("donation-form__status--error", type === "error");
+    statusMessage.classList.toggle("donation-form__status--success", type === "success");
+  };
+
+  const clearStatus = (): void => {
+    statusMessage.hidden = true;
+    statusMessage.textContent = "";
+    statusMessage.classList.remove("donation-form__status--error", "donation-form__status--success");
+  };
+
+  const clearAmountSelection = (): void => {
+    amountButtons.forEach((button) => button.classList.remove("is-selected"));
+  };
+
+  const isStep1Valid = (): boolean => state.amount !== null && state.petId !== null;
+
+  const isStep2Valid = (): boolean => {
+    const validName = isValidDonorName(nameInput.value);
+    const validEmail = isValidEmail(emailInput.value);
+    setFieldInvalid(nameInput, !validName);
+    setFieldInvalid(emailInput, !validEmail);
+    return validName && validEmail;
+  };
+
+  const isStep3Valid = (): boolean => {
+    const validCard = isValidCardNumber(cardInput.value);
+    const validExpiry = isValidExpiry(expiryInput.value);
+    const validCvv = isValidCvv(cvvInput.value);
+    setFieldInvalid(cardInput, !validCard);
+    setFieldInvalid(expiryInput, !validExpiry);
+    setFieldInvalid(cvvInput, !validCvv);
+    return validCard && validExpiry && validCvv;
+  };
+
+  const getCurrentStep = (): number => parseStep(getVisibleStep(overlay)?.dataset.step) ?? 1;
+
+  const syncActionButtons = (): void => {
+    const step = getCurrentStep();
+    if (step === 1) nextButton.disabled = !isStep1Valid();
+    if (step === 2) nextButton.disabled = !isStep2Valid();
+    if (step === 3) completeButton.disabled = !isStep3Valid() || state.isSubmitting;
+  };
+
+  const openPetDropdown = (): void => {
+    petDropdown.classList.add("is-open");
+    petTrigger.setAttribute("aria-expanded", "true");
+  };
+
+  const selectPet = (item: HTMLLIElement): void => {
+    const slug = item.dataset.value ?? "";
+    const petId = PET_ID_BY_SLUG[slug] ?? null;
+    const petName = item.textContent?.trim() ?? "";
+
+    state.petId = petId;
+    state.petName = petName;
+    petTriggerText.textContent = petName;
+    petTriggerText.style.color = "#000000";
+
+    petDropdown
+      .querySelectorAll<HTMLLIElement>("li")
+      .forEach((listItem) => listItem.classList.toggle("is-selected", listItem === item));
+
+    closePetDropdown();
+    syncActionButtons();
+  };
+
+  const setAmountFromInput = (): void => {
+    clearAmountSelection();
+    const parsedAmount = parsePositiveAmount(amountInput.value);
+    state.amount = parsedAmount;
+    setFieldInvalid(amountInput, parsedAmount === null && amountInput.value.trim().length > 0);
+    syncActionButtons();
+  };
+
+  const resetForOpen = (presetAmount: number | null): void => {
+    state.amount = null;
+    state.petId = null;
+    state.petName = "";
+    state.isSubmitting = false;
+    clearStatus();
+
+    clearAmountSelection();
+    amountInput.value = "";
+    setFieldInvalid(amountInput, false);
+
+    petTriggerText.textContent = "Choose your favourite";
+    petTriggerText.style.color = "#A4A8AE";
+    petDropdown
+      .querySelectorAll<HTMLLIElement>("li")
+      .forEach((item) => item.classList.remove("is-selected"));
+
+    const currentUser = getCurrentUser();
+    const loggedInUser = isLoggedIn() && currentUser !== null;
+
+    nameInput.value = loggedInUser ? currentUser.name : "";
+    emailInput.value = loggedInUser ? currentUser.email : "";
+    setFieldInvalid(nameInput, false);
+    setFieldInvalid(emailInput, false);
+
+    cardInput.value = "";
+    expiryInput.value = "";
+    cvvInput.value = "";
+    setFieldInvalid(cardInput, false);
+    setFieldInvalid(expiryInput, false);
+    setFieldInvalid(cvvInput, false);
+
+    saveCardCheckbox.checked = false;
+    saveCardRow.hidden = !loggedInUser;
+
+    activeSavedCards = loggedInUser ? readSavedCards(currentUser.email) : [];
+    savedCardsBlock.hidden = activeSavedCards.length === 0;
+    savedCardsSelect.innerHTML = '<option value="">Choose a saved card</option>';
+    activeSavedCards.forEach((card) => {
+      const option = document.createElement("option");
+      option.value = card.id;
+      option.textContent = card.label;
+      savedCardsSelect.append(option);
+    });
+    savedCardsSelect.value = "";
+
+    if (presetAmount !== null && presetAmount > 0) {
+      const presetButton = overlay.querySelector<HTMLButtonElement>(
+        `.donation-form__amount-btn[data-amount="${presetAmount}"]`,
+      );
+
+      if (presetButton) {
+        presetButton.classList.add("is-selected");
+      } else {
+        amountInput.value = String(presetAmount);
+      }
+
+      state.amount = presetAmount;
+    }
+
+    setDonationStep(1);
+    syncActionButtons();
+  };
+
   overlay
     .querySelector<HTMLElement>(".donation-form__close")
     ?.addEventListener("click", closeDonationForm);
   overlay.addEventListener("click", (event) => handleOverlayClick(event, POPUP_FORM_ID));
 
-  overlay.querySelector<HTMLElement>(".donation-form__next")?.addEventListener("click", () => {
-    const currentStepElement = getVisibleStep(overlay);
-    const currentStep = parseStep(currentStepElement?.dataset.step);
-    if (currentStep === null || currentStep >= TOTAL_STEPS) return;
-
-    setDonationStep(currentStep + 1);
+  nextButton.addEventListener("click", () => {
+    const currentStep = getCurrentStep();
+    if (currentStep === 1 && !isStep1Valid()) {
+      setStatus("Please choose donation amount and pet.", "error");
+      syncActionButtons();
+      return;
+    }
+    if (currentStep === 2 && !isStep2Valid()) {
+      setStatus("Please enter a valid name and email.", "error");
+      syncActionButtons();
+      return;
+    }
+    clearStatus();
+    setDonationStep(Math.min(currentStep + 1, TOTAL_STEPS));
+    syncActionButtons();
   });
 
-  overlay.querySelector<HTMLElement>(".donation-form__back")?.addEventListener("click", () => {
-    const currentStepElement = getVisibleStep(overlay);
-    const currentStep = parseStep(currentStepElement?.dataset.step);
-    if (currentStep === null || currentStep <= 1) return;
-
+  backButton.addEventListener("click", () => {
+    clearStatus();
+    const currentStep = getCurrentStep();
+    if (currentStep <= 1) return;
     setDonationStep(currentStep - 1);
+    syncActionButtons();
   });
 
-  overlay
-    .querySelector<HTMLElement>(".donation-form__complete")
-    ?.addEventListener("click", closeDonationForm);
+  completeButton.addEventListener("click", async () => {
+    if (!isStep3Valid() || state.amount === null || state.petId === null) {
+      setStatus("Please fill card details correctly.", "error");
+      syncActionButtons();
+      return;
+    }
 
-  overlay.querySelectorAll<HTMLElement>(".donation-form__amount-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      overlay
-        .querySelectorAll<HTMLElement>(".donation-form__amount-btn")
-        .forEach((amountButton) => amountButton.classList.remove("is-selected"));
-      button.classList.add("is-selected");
-    });
-  });
+    state.isSubmitting = true;
+    syncActionButtons();
+    clearStatus();
 
-  const petTrigger = document.getElementById("donation-pet-trigger");
-  const petDropdown = document.getElementById("donation-pet-dropdown");
-
-  if (petTrigger && petDropdown) {
-    petTrigger.addEventListener("click", (event) => {
-      event.stopPropagation();
-      const isOpen = petDropdown.classList.toggle("is-open");
-      petTrigger.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    petDropdown.querySelectorAll<HTMLLIElement>(".donation-form__pet-list li").forEach((item) => {
-      item.addEventListener("click", () => {
-        const petButtonText = petTrigger.querySelector<HTMLElement>(".donation-form__pet-btn-text");
-        if (!petButtonText) return;
-
-        petButtonText.textContent = item.textContent;
-        petButtonText.style.color = "#000000";
-
-        petDropdown
-          .querySelectorAll<HTMLLIElement>("li")
-          .forEach((listItem) => listItem.classList.remove("is-selected"));
-        item.classList.add("is-selected");
-
-        closePetDropdown();
+    try {
+      await createDonation({
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        amount: state.amount,
+        petId: state.petId,
       });
+
+      if (saveCardCheckbox.checked && isLoggedIn()) {
+        upsertSavedCard(emailInput.value.trim(), cardInput.value, expiryInput.value.trim(), cvvInput.value.trim());
+      }
+
+      setStatus(
+        `Thank you for your donation of $${state.amount.toFixed(2)} to ${state.petName}!`,
+        "success",
+      );
+    } catch {
+      setStatus("Something went wrong. Please, try again later.", "error");
+    } finally {
+      state.isSubmitting = false;
+      syncActionButtons();
+    }
+  });
+
+  amountButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      clearAmountSelection();
+      button.classList.add("is-selected");
+      amountInput.value = "";
+      setFieldInvalid(amountInput, false);
+      const amount = parseStep(button.dataset.amount);
+      state.amount = amount !== null && amount > 0 ? amount : null;
+      syncActionButtons();
     });
-  }
+  });
+
+  otherButton.addEventListener("click", () => {
+    clearAmountSelection();
+    amountInput.focus();
+  });
+
+  amountInput.addEventListener("input", setAmountFromInput);
+  amountInput.addEventListener("blur", setAmountFromInput);
+
+  nameInput.addEventListener("input", () => {
+    setFieldInvalid(nameInput, false);
+    syncActionButtons();
+  });
+  emailInput.addEventListener("input", () => {
+    setFieldInvalid(emailInput, false);
+    syncActionButtons();
+  });
+  nameInput.addEventListener("blur", () => {
+    setFieldInvalid(nameInput, !isValidDonorName(nameInput.value));
+    syncActionButtons();
+  });
+  emailInput.addEventListener("blur", () => {
+    setFieldInvalid(emailInput, !isValidEmail(emailInput.value));
+    syncActionButtons();
+  });
+
+  cardInput.addEventListener("input", () => {
+    cardInput.value = formatCardNumber(cardInput.value);
+    setFieldInvalid(cardInput, false);
+    syncActionButtons();
+  });
+  cvvInput.addEventListener("input", () => {
+    cvvInput.value = cvvInput.value.replace(/\D/g, "").slice(0, 3);
+    setFieldInvalid(cvvInput, false);
+    syncActionButtons();
+  });
+  expiryInput.addEventListener("input", () => {
+    expiryInput.value = formatExpiry(expiryInput.value);
+    setFieldInvalid(expiryInput, false);
+    syncActionButtons();
+  });
+  cardInput.addEventListener("blur", () => {
+    setFieldInvalid(cardInput, !isValidCardNumber(cardInput.value));
+    syncActionButtons();
+  });
+  cvvInput.addEventListener("blur", () => {
+    setFieldInvalid(cvvInput, !isValidCvv(cvvInput.value));
+    syncActionButtons();
+  });
+  expiryInput.addEventListener("blur", () => {
+    setFieldInvalid(expiryInput, !isValidExpiry(expiryInput.value));
+    syncActionButtons();
+  });
+
+  savedCardsSelect.addEventListener("change", () => {
+    const selectedCard = activeSavedCards.find((card) => card.id === savedCardsSelect.value);
+    if (!selectedCard) return;
+
+    cardInput.value = formatCardNumber(selectedCard.cardNumber);
+    expiryInput.value = selectedCard.expiry;
+    cvvInput.value = selectedCard.cvv;
+    setFieldInvalid(cardInput, false);
+    setFieldInvalid(expiryInput, false);
+    setFieldInvalid(cvvInput, false);
+    syncActionButtons();
+  });
+
+  petTrigger.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (petDropdown.classList.contains("is-open")) {
+      closePetDropdown();
+      return;
+    }
+    openPetDropdown();
+  });
+
+  petDropdown.querySelectorAll<HTMLLIElement>(".donation-form__pet-list li").forEach((item) => {
+    item.addEventListener("click", () => selectPet(item));
+    item.addEventListener("keydown", (event) => {
+      if (!activationKeys.has(event.key)) return;
+      event.preventDefault();
+      selectPet(item);
+    });
+  });
 
   document.addEventListener("click", (event: MouseEvent) => {
     if (!petDropdown?.classList.contains("is-open")) return;
@@ -565,7 +1057,15 @@ const initDonationForm = (): void => {
     }
   });
 
-  petDropdown?.addEventListener("click", (event) => event.stopPropagation());
+  petDropdown.addEventListener("click", (event) => event.stopPropagation());
+  overlay.addEventListener("donation:open", (event) => {
+    const detail = event instanceof CustomEvent ? event.detail : null;
+    const presetAmount =
+      detail && typeof detail === "object" && "presetAmount" in detail
+        ? (detail.presetAmount as number | null)
+        : null;
+    resetForOpen(presetAmount);
+  });
 };
 
 const initPetsSlider = async (): Promise<void> => {
@@ -661,15 +1161,24 @@ const initDonationBanner = (): void => {
     event.preventDefault();
 
     const input = form.querySelector<HTMLInputElement>(".donation-banner__input");
-    const rawValue = input?.value.trim().replace(/[$,]/g, "") ?? "";
-    const parsedAmount = Number.parseInt(rawValue, 10);
+    const rawValue = input?.value.trim().replace("$", "") ?? "";
+    const parsedAmount = parsePositiveAmount(rawValue);
 
-    if (Number.isNaN(parsedAmount) || parsedAmount <= 0) {
+    if (parsedAmount === null) {
       openCarePopup();
       return;
     }
 
     openDonationForm(parsedAmount);
+  });
+};
+
+const initDonationFormTriggers = (): void => {
+  getFormTriggers().forEach((trigger) => {
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      openDonationForm(null);
+    });
   });
 };
 
@@ -727,6 +1236,7 @@ const initZoosSidebar = (): void => {
 const init = (): void => {
   initCarePopup();
   initDonationForm();
+  initDonationFormTriggers();
   void initPetsSlider();
   void initTestimonialsSlider();
   initDonationBanner();
@@ -734,13 +1244,6 @@ const init = (): void => {
   initZoosSidebar();
   initPetCardLinks();
 };
-
-getFormTriggers().forEach((trigger) => {
-  trigger.addEventListener("click", (event) => {
-    event.preventDefault();
-    openDonationForm(null);
-  });
-});
 
 document.addEventListener("keydown", handlePopupEscape);
 

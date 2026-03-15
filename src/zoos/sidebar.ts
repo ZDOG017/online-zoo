@@ -70,7 +70,12 @@ const toSidebarItems = (cameras: ReadonlyArray<CameraItem>): string => {
   const itemsMarkup = camerasWithLocalVisuals
     .map((camera, index) => {
       const cameraPetId = typeof camera.petId === "number" ? camera.petId : index + 1;
-      const text = typeof camera.text === "string" && camera.text.length > 0 ? camera.text : "Watch live animal cam";
+      const text =
+        typeof camera.description === "string" && camera.description.length > 0
+          ? camera.description
+          : typeof camera.text === "string" && camera.text.length > 0
+            ? camera.text
+            : "Watch live animal cam";
       const visual = pickVisual(cameraPetId, index);
       const activeClass = cameraPetId === activePetId ? " zoos-sidebar__box--active" : "";
 

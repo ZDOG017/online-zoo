@@ -137,7 +137,6 @@ const mountHeaderUserMenu = (): void => {
 
 const initHeaderUserMenu = (): void => {
   mountHeaderUserMenu();
-  // Retry once in case page scripts/layout mutate nav right after first paint.
   window.setTimeout(mountHeaderUserMenu, 0);
 };
 
