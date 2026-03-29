@@ -1037,6 +1037,7 @@ body {
     line-height: 150%;
     color: #000000;
     overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .testimonial-card__author {
@@ -2231,425 +2232,6 @@ body {
     display: block;
 }
 
-.donation-form__next:disabled,
-.donation-form__complete:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.donation-form__input.is-invalid,
-.donation-form__pet-btn.is-invalid {
-    border-color: #D7263D;
-    box-shadow: 0 0 0 1px rgba(215, 38, 61, 0.2);
-}
-
-.donation-form__status {
-    margin: 12px 120px 0;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 140%;
-}
-
-.donation-form__status--error {
-    color: #D7263D;
-}
-
-.donation-form__status--success {
-    color: #0A8F50;
-}
-
-.donation-form__saved-cards {
-    margin-bottom: 30px;
-}
-
-.donation-form__saved-select {
-    margin-bottom: 0;
-}
-
-.donation-form__checkbox-label--save-card {
-    margin-top: 30px;
-}
-
-@media (max-width: 1200px) {
-    .donation-form {
-        width: min(920px, calc(100vw - 40px));
-        max-height: calc(100vh - 40px);
-        overflow-y: auto;
-    }
-
-    .donation-form__step {
-        padding: 0 40px 24px;
-    }
-
-    .donation-form__footer {
-        padding: 0 40px;
-        flex-wrap: wrap;
-        height: auto;
-        min-height: 92px;
-    }
-
-    .donation-form__status {
-        margin-left: 40px;
-        margin-right: 40px;
-    }
-
-    .donation-form__pet-row {
-        gap: 20px;
-    }
-
-    .donation-form__pet-btn,
-    .donation-form__pet-dropdown {
-        width: min(440px, calc(100vw - 280px));
-    }
-
-    .donation-form__input--card,
-    .donation-form__input--cvv {
-        width: 100%;
-    }
-
-    .donation-form__field {
-        flex: 1;
-        min-width: 220px;
-    }
-}
-
-@media (max-width: 640px) {
-    .popup-overlay {
-        padding: 20px;
-    }
-
-    .donation-form {
-        width: 100%;
-        max-width: 640px;
-        max-height: calc(100vh - 40px);
-        min-height: 0;
-    }
-
-    .donation-form__header {
-        min-height: 134px;
-        padding: 22px 60px 22px 60px;
-    }
-
-    .donation-form__title {
-        font-size: 56px;
-        line-height: 1.1;
-    }
-
-    .donation-form__close {
-        top: 22px;
-        right: 22px;
-    }
-
-    .donation-form__step {
-        padding: 0 80px 24px;
-    }
-
-    .donation-form__section-title {
-        padding-top: 28px;
-        margin-left: 0;
-        font-size: 18px;
-        line-height: 150%;
-        text-transform: none;
-    }
-
-    .donation-form__divider {
-        margin: 26px -80px 0;
-    }
-
-    .donation-form__section {
-        padding-top: 28px;
-    }
-
-    .donation-form__amounts,
-    .donation-form__other-row,
-    .donation-form__pet-row,
-    .donation-form__payment-row,
-    .donation-form__expiry-row {
-        gap: 20px;
-    }
-
-    .donation-form__amounts {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        margin-bottom: 24px;
-    }
-
-    .donation-form__amount-btn {
-        width: 100%;
-        min-width: 0;
-        height: 65px;
-        padding: 0;
-    }
-
-    .donation-form__other-row {
-        align-items: center;
-        margin-bottom: 24px;
-    }
-
-    .donation-form__other-btn,
-    .donation-form__input--amount {
-        width: calc(50% - 10px);
-        min-width: 0;
-    }
-
-    .donation-form__other-btn {
-        height: 65px;
-        padding: 0 12px;
-    }
-
-    .donation-form__pet-row {
-        align-items: center;
-        margin-bottom: 24px;
-    }
-
-    .donation-form__pet-label-btn {
-        width: 220px;
-        min-width: 220px;
-        height: 65px;
-        padding: 0 12px;
-    }
-
-    .donation-form__pet-select-wrap {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .donation-form__pet-btn,
-    .donation-form__pet-dropdown {
-        width: 100%;
-    }
-
-    .donation-form__checkbox-label {
-        align-items: center;
-        justify-content: flex-start;
-        gap: 14px;
-        font-size: 18px;
-    }
-
-    .donation-form__field,
-    .donation-form__select-wrap {
-        min-width: 0;
-    }
-
-    .donation-form__input--card,
-    .donation-form__input--cvv {
-        width: 100%;
-    }
-
-    .donation-form__input--select {
-        width: 210px;
-    }
-
-    .donation-form__disclaimer {
-        font-size: 18px;
-        line-height: 150%;
-        margin-top: 18px;
-    }
-
-    .donation-form__status {
-        margin: 12px 80px 0;
-        font-size: 16px;
-    }
-
-    .donation-form__footer {
-        padding: 18px 80px 24px;
-        min-height: 106px;
-        display: grid;
-        grid-template-columns: auto auto 1fr;
-        align-items: center;
-        column-gap: 24px;
-    }
-
-    .donation-form__steps {
-        order: 1;
-        gap: 12px;
-    }
-
-    .donation-form__back {
-        order: 2;
-        justify-self: start;
-    }
-
-    .donation-form__next,
-    .donation-form__complete {
-        order: 3;
-        justify-self: end;
-        width: 214px;
-        min-width: 214px;
-        padding: 0 20px;
-    }
-}
-
-@media (max-width: 320px) {
-    .popup-overlay {
-        padding: 8px;
-    }
-
-    .donation-form {
-        max-width: 304px;
-        border-radius: 4px;
-    }
-
-    .donation-form__header {
-        min-height: 111px;
-        padding: 18px 18px 14px;
-    }
-
-    .donation-form__title {
-        font-size: 48px;
-        line-height: 1.05;
-    }
-
-    .donation-form__close {
-        top: 10px;
-        right: 10px;
-    }
-
-    .donation-form__step {
-        padding: 0 18px 14px;
-    }
-
-    .donation-form__section-title {
-        padding-top: 20px;
-        font-size: 18px;
-        line-height: 150%;
-    }
-
-    .donation-form__divider {
-        margin: 14px -18px 0;
-    }
-
-    .donation-form__section {
-        padding-top: 16px;
-    }
-
-    .donation-form__label {
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
-
-    .donation-form__amounts {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        margin-bottom: 16px;
-    }
-
-    .donation-form__amount-btn {
-        height: 48px;
-        font-size: 16px;
-        line-height: 20px;
-    }
-
-    .donation-form__other-row {
-        gap: 12px;
-        margin-bottom: 16px;
-    }
-
-    .donation-form__other-btn,
-    .donation-form__input--amount {
-        width: calc(50% - 6px);
-        height: 48px;
-        font-size: 16px;
-    }
-
-    .donation-form__pet-row {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-        margin-bottom: 16px;
-    }
-
-    .donation-form__pet-label-btn {
-        width: 100%;
-        min-width: 0;
-        height: 48px;
-        font-size: 16px;
-    }
-
-    .donation-form__pet-btn {
-        height: 48px;
-        padding-left: 12px;
-        font-size: 14px;
-    }
-
-    .donation-form__pet-chevron {
-        height: 48px;
-    }
-
-    .donation-form__pet-dropdown {
-        width: 100%;
-    }
-
-    .donation-form__checkbox-label {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 8px;
-        font-size: 14px;
-        line-height: 140%;
-    }
-
-    .donation-form__checkbox {
-        width: 30px;
-        height: 30px;
-    }
-
-    .donation-form__input {
-        font-size: 14px;
-        padding: 12px;
-    }
-
-    .donation-form__input--full,
-    .donation-form__input--card,
-    .donation-form__input--cvv,
-    .donation-form__input--select {
-        width: 100%;
-        height: 48px;
-    }
-
-    .donation-form__payment-row,
-    .donation-form__expiry-row {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .donation-form__disclaimer {
-        font-size: 14px;
-        line-height: 140%;
-        margin-top: 12px;
-    }
-
-    .donation-form__status {
-        margin: 8px 18px 0;
-        font-size: 13px;
-    }
-
-    .donation-form__footer {
-        padding: 8px 18px 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .donation-form__next,
-    .donation-form__complete {
-        width: 100%;
-        min-width: 0;
-        height: 56px;
-        order: 1;
-    }
-
-    .donation-form__back {
-        order: 2;
-    }
-
-    .donation-form__steps {
-        order: 3;
-        gap: 10px;
-    }
-}
-
 @media (max-width: 1200px) {
     :root {
         --container-width: 1200px;
@@ -3468,11 +3050,9 @@ body {
     }
 
     .testimonials__title {
-        font-size: clamp(36px, 10.5vw, 54px);
-        line-height: 1.2;
+        font-size: 54px;
+        line-height: 66px;
         margin-bottom: 30px;
-        max-width: 100%;
-        overflow-wrap: anywhere;
     }
 
     .testimonials__subtitle {
@@ -3483,8 +3063,6 @@ body {
         width: 100%;
         max-width: 368px;
         box-sizing: border-box;
-        padding-left: 24px;
-        padding-right: 24px;
         margin: 0 auto;
     }
 
@@ -3524,8 +3102,8 @@ body {
     }
 
     .testimonial-card {
-        width: min(523px, calc(100vw - 40px));
-        min-width: min(523px, calc(100vw - 40px));
+        width: min(523px, calc(100vw - 80px));
+        min-width: min(523px, calc(100vw - 80px));
         flex-shrink: 0;
         min-height: 371px;
         padding: 20px 30px 50px;
@@ -3694,6 +3272,10 @@ body {
     }
 }
 
+/* =======================
+   Zoos page (Panda)
+   ======================= */
+
 .zoos-page {
     padding-left: 0;
     position: relative;
@@ -3701,6 +3283,7 @@ body {
     width: 100%;
 }
 
+/* === Sidebar base (collapsed by default) === */
 .zoos-sidebar {
     position: absolute;
     top: 110px;
@@ -3715,6 +3298,7 @@ body {
     transition: width 0.3s ease;
 }
 
+/* Top bar: LIVE badge + toggle arrow */
 .zoos-sidebar__top {
     display: flex;
     align-items: center;
@@ -3746,6 +3330,7 @@ body {
     opacity: 0.7;
 }
 
+/* Animal list (always visible) */
 .zoos-sidebar__animals {
     display: flex;
     flex-direction: column;
@@ -3782,6 +3367,7 @@ body {
     text-decoration: none;
 }
 
+/* Collapsed: icons large, centered, no labels */
 .zoos-sidebar__box {
     display: flex;
     align-items: center;
@@ -3843,6 +3429,7 @@ body {
     border-bottom: none;
 }
 
+/* === Expanded (.open): icons smaller, labels visible === */
 .zoos-sidebar.open {
     width: 300px;
 }
@@ -3861,6 +3448,7 @@ body {
     display: block;
 }
 
+/* Main content pushed right to clear the sidebar */
 .zoos-main {
     margin-left: 0;
     padding-top: 54px;
