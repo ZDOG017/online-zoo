@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [online-zoo-bf]
+    branches: [online-zoo-creative-extension]
   workflow_dispatch:
 
 env:
