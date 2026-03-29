@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, online-zoo, online-zoo-bf]
+    branches: [main, online-zoo, online-zoo-bf, online-zoo-creative-extension]
   pull_request:
-    branches: [main, online-zoo, online-zoo-bf]
+    branches: [main, online-zoo, online-zoo-bf, online-zoo-creative-extension]
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
