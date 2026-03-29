@@ -914,39 +914,41 @@ const initDonationForm = (): void => {
     syncActionButtons();
   });
 
-  completeButton.addEventListener("click", async () => {
-    if (!isStep3Valid() || state.amount === null || state.petId === null) {
-      setStatus("Please fill card details correctly.", "error");
-      syncActionButtons();
-      return;
-    }
-
-    state.isSubmitting = true;
-    syncActionButtons();
-    clearStatus();
-
-    try {
-      await createDonation({
-        name: nameInput.value.trim(),
-        email: emailInput.value.trim(),
-        amount: state.amount,
-        petId: state.petId,
-      });
-
-      if (saveCardCheckbox.checked && isLoggedIn()) {
-        upsertSavedCard(emailInput.value.trim(), cardInput.value, expiryInput.value.trim(), cvvInput.value.trim());
+  completeButton.addEventListener("click", () => {
+    void (async () => {
+      if (!isStep3Valid() || state.amount === null || state.petId === null) {
+        setStatus("Please fill card details correctly.", "error");
+        syncActionButtons();
+        return;
       }
 
-      setStatus(
-        `Thank you for your donation of $${state.amount.toFixed(2)} to ${state.petName}!`,
-        "success",
-      );
-    } catch {
-      setStatus("Something went wrong. Please, try again later.", "error");
-    } finally {
-      state.isSubmitting = false;
+      state.isSubmitting = true;
       syncActionButtons();
-    }
+      clearStatus();
+
+      try {
+        await createDonation({
+          name: nameInput.value.trim(),
+          email: emailInput.value.trim(),
+          amount: state.amount,
+          petId: state.petId,
+        });
+
+        if (saveCardCheckbox.checked && isLoggedIn()) {
+          upsertSavedCard(emailInput.value.trim(), cardInput.value, expiryInput.value.trim(), cvvInput.value.trim());
+        }
+
+        setStatus(
+          `Thank you for your donation of $${state.amount.toFixed(2)} to ${state.petName}!`,
+          "success",
+        );
+      } catch {
+        setStatus("Something went wrong. Please, try again later.", "error");
+      } finally {
+        state.isSubmitting = false;
+        syncActionButtons();
+      }
+    })();
   });
 
   amountButtons.forEach((button) => {

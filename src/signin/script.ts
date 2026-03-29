@@ -201,49 +201,51 @@ const initSignIn = (): void => {
     });
   });
 
-  elements.form.addEventListener("submit", async (event) => {
+  elements.form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const loginError = validateAndRenderField("login");
-    const passwordError = validateAndRenderField("password");
+    void (async () => {
+      const loginError = validateAndRenderField("login");
+      const passwordError = validateAndRenderField("password");
 
-    if (loginError || passwordError) {
-      updateSubmitButton();
-      return;
-    }
-
-    const payload: LoginRequest = {
-      login: elements.loginInput.value.trim(),
-      password: elements.passwordInput.value.trim(),
-    };
-
-    const originalButtonLabel = elements.submitButton.querySelector("span");
-    const originalLabelText = originalButtonLabel?.textContent ?? "";
-
-    elements.submitButton.disabled = true;
-    if (originalButtonLabel) {
-      originalButtonLabel.textContent = "Signing in...";
-    }
-    elements.authError.textContent = "";
-
-    try {
-      const response = await loginUser(payload);
-      const token = extractToken(response);
-      if (!token) throw new Error("Missing token in login response");
-
-      const user = await getUserForSession(response, token);
-      if (!user) throw new Error("Missing user data for session");
-
-      setAuth(token, user);
-      window.location.assign(REDIRECT_URL);
-    } catch {
-      elements.authError.textContent = INCORRECT_CREDENTIALS_MESSAGE;
-      updateSubmitButton();
-    } finally {
-      if (originalButtonLabel) {
-        originalButtonLabel.textContent = originalLabelText;
+      if (loginError || passwordError) {
+        updateSubmitButton();
+        return;
       }
-    }
+
+      const payload: LoginRequest = {
+        login: elements.loginInput.value.trim(),
+        password: elements.passwordInput.value.trim(),
+      };
+
+      const originalButtonLabel = elements.submitButton.querySelector("span");
+      const originalLabelText = originalButtonLabel?.textContent ?? "";
+
+      elements.submitButton.disabled = true;
+      if (originalButtonLabel) {
+        originalButtonLabel.textContent = "Signing in...";
+      }
+      elements.authError.textContent = "";
+
+      try {
+        const response = await loginUser(payload);
+        const token = extractToken(response);
+        if (!token) throw new Error("Missing token in login response");
+
+        const user = await getUserForSession(response, token);
+        if (!user) throw new Error("Missing user data for session");
+
+        setAuth(token, user);
+        window.location.assign(REDIRECT_URL);
+      } catch {
+        elements.authError.textContent = INCORRECT_CREDENTIALS_MESSAGE;
+        updateSubmitButton();
+      } finally {
+        if (originalButtonLabel) {
+          originalButtonLabel.textContent = originalLabelText;
+        }
+      }
+    })();
   });
 
   updateSubmitButton();

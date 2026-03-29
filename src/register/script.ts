@@ -247,43 +247,45 @@ const initRegister = (): void => {
     });
   });
 
-  elements.form.addEventListener("submit", async (event) => {
+  elements.form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const errors = (Object.keys(fieldMap) as RegisterFieldName[]).map((fieldName) => validateAndRenderField(fieldName));
-    const hasErrors = errors.some((message) => message !== null);
-    if (hasErrors) {
-      updateSubmitButton();
-      return;
-    }
-
-    const payload: RegistrationPayload = {
-      login: elements.loginInput.value.trim(),
-      password: elements.passwordInput.value.trim(),
-      name: elements.nameInput.value.trim(),
-      email: elements.emailInput.value.trim(),
-    };
-
-    const labelElement = elements.submitButton.querySelector("span");
-    const originalButtonText = labelElement?.textContent ?? "";
-    elements.submitButton.disabled = true;
-    elements.submitButton.setAttribute("aria-disabled", "true");
-    if (labelElement) {
-      labelElement.textContent = "Registering...";
-    }
-    elements.authError.textContent = "";
-
-    try {
-      await registerUser(payload);
-      window.location.assign(REDIRECT_URL);
-    } catch (error) {
-      elements.authError.textContent = getBackendErrorMessage(error);
-      updateSubmitButton();
-    } finally {
-      if (labelElement) {
-        labelElement.textContent = originalButtonText;
+    void (async () => {
+      const errors = (Object.keys(fieldMap) as RegisterFieldName[]).map((fieldName) => validateAndRenderField(fieldName));
+      const hasErrors = errors.some((message) => message !== null);
+      if (hasErrors) {
+        updateSubmitButton();
+        return;
       }
-    }
+
+      const payload: RegistrationPayload = {
+        login: elements.loginInput.value.trim(),
+        password: elements.passwordInput.value.trim(),
+        name: elements.nameInput.value.trim(),
+        email: elements.emailInput.value.trim(),
+      };
+
+      const labelElement = elements.submitButton.querySelector("span");
+      const originalButtonText = labelElement?.textContent ?? "";
+      elements.submitButton.disabled = true;
+      elements.submitButton.setAttribute("aria-disabled", "true");
+      if (labelElement) {
+        labelElement.textContent = "Registering...";
+      }
+      elements.authError.textContent = "";
+
+      try {
+        await registerUser(payload);
+        window.location.assign(REDIRECT_URL);
+      } catch (error) {
+        elements.authError.textContent = getBackendErrorMessage(error);
+        updateSubmitButton();
+      } finally {
+        if (labelElement) {
+          labelElement.textContent = originalButtonText;
+        }
+      }
+    })();
   });
 
   updateSubmitButton();
