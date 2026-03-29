@@ -2,6 +2,9 @@
   "name": "online-zoo",
   "version": "1.0.0",
   "description": "Online Zoo multi-page project",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

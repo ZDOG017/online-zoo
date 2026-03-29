@@ -1,1 +1,2 @@
+# Staged *.ts → eslint --max-warnings 0 (see package.json "lint-staged")
 npx lint-staged
