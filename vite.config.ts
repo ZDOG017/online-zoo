@@ -1,6 +1,6 @@
-import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
-import { defineConfig } from "vite";
+import { fileURLToPath } from "node:url";
+import { defineConfig } from "vitest/config";
 
 const currentDirectoryPath = dirname(fileURLToPath(import.meta.url));
 const repoName = "online-zoo";
@@ -21,6 +21,16 @@ export default defineConfig(({ command }) => ({
         gorilla: resolve(currentDirectoryPath, "online-zoo/pages/zoos/gorilla/index.html"),
         lemur: resolve(currentDirectoryPath, "online-zoo/pages/zoos/lemur/index.html")
       }
+    }
+  },
+  test: {
+    environment: "node",
+    include: ["src/**/*.test.ts"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+      include: ["src/api/**/*.ts"],
+      exclude: ["**/*.test.ts", "src/api/__tests__/**", "src/api/index.ts"]
     }
   }
 }));

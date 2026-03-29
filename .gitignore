@@ -10,5 +10,6 @@ online-zoo.md
 api-spec.json
 node_modules/
 dist/
+coverage/
 npm-debug.log*
 online-zoo-creative-extension.md
